@@ -1,0 +1,44 @@
+Windows Registry Editor Version 5.00
+
+;英特尔集显右键菜单
+;[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\background\shellex\ContextMenuHandlers\igfxDTCM]
+;[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\background\shellex\ContextMenuHandlers\igfxcui]
+;右键 "兼容性疑难解答"
+;[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\exefile\shellex\ContextMenuHandlers\Compatibility]
+;[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Msi.Package\shellex\ContextMenuHandlers\Compatibility]
+;[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\batfile\shellex\ContextMenuHandlers\Compatibility]
+;[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\cmdfile\shellex\ContextMenuHandlers\Compatibility]
+;右键 "Windows Defender扫描"
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Drive\shellex\ContextMenuHandlers\EPP]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\shellex\ContextMenuHandlers\EPP]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\*\shellex\ContextMenuHandlers\EPP]
+;磁盘右键 "启用Bitlocker"
+;[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Drive\shell\encrypt-bde\command]
+;[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Drive\shell\encrypt-bde]
+;[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Drive\shell\encrypt-bde-elev\command]
+;[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Drive\shell\encrypt-bde-elev]
+;磁盘右键 "以便携方式打开"
+;[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Drive\shellex\ContextMenuHandlers\{D6791A63-E7E2-4fee-BF52-5DED8E86E9B8}]
+;移除右键新建 ZIP
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\.contact\ShellNew]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\.rar\ShellNew]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\.zip\ShellNew]
+;磁盘右键 "刻录到光盘"
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Drive\shellex\ContextMenuHandlers\{fbeb8a05-beee-4442-804e-409d6c4515e9}]
+;右键 "共享"
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\*\shellex\ContextMenuHandlers\ModernSharing]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\*\shellex\ContextMenuHandlers\Sharing]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\shellex\ContextMenuHandlers\Sharing]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\background\shellex\ContextMenuHandlers\Sharing]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Drive\shellex\ContextMenuHandlers\Sharing]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\LibraryFolder\background\shellex\ContextMenuHandlers\Sharing]
+;右键 "固定到快速访问"
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Folder\shell\pintohome\command]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Folder\shell\pintohome]
+;右键 "工作文件夹"
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\*\shellex\ContextMenuHandlers\WorkFolders]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\background\shellex\ContextMenuHandlers\WorkFolders]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\AllFilesystemObjects\shell\LaunchWorkfoldersControl\command]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\AllFilesystemObjects\shell\LaunchWorkfoldersControl]
+;右键 "包含到库中"
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Folder\shellex\ContextMenuHandlers\Library Location]

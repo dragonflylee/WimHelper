@@ -1,0 +1,10 @@
+Pack/AAct*.exe
+Pack/Appx/*.AppxBundle
+Pack/Appx/*.Appx
+*.wim
+*.esd
+*.iso
+
+Mount
+Temp
+DVD

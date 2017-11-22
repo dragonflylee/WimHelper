@@ -1,0 +1,127 @@
+Windows Registry Editor Version 5.00
+
+;屏蔽IE11推送
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Setup\11.0]
+"DoNotAllowIE11"=dword:00000001
+;屏蔽IE10推送
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Setup\10.0]
+"DoNotAllowIE10"=dword:00000001
+;屏蔽IE9推送
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Setup\9.0]
+"DoNotAllowIE90"=dword:00000001
+
+;屏蔽MRT推送
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\MRT]
+"DontOfferThroughWUAU"=dword:00000001
+
+;显示桌面系统图标
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel]
+;个人文件夹
+"{59031a47-3f72-44a7-89c5-5595fe6b30ee}"=dword:00000000 
+;回收站
+"{645FF040-5081-101B-9F08-00AA002F954E}"=dword:00000000
+;此电脑
+"{20D04FE0-3AEA-1069-A2D8-08002B30309D}"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+;去掉快捷方式字样
+"link"=hex:00,00,00,00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+;显示运行
+"Start_ShowRun"=dword:00000001
+;禁止高亮显示新安装的程序（开始菜单）
+"Start_NotifyNewApps"=dword:00000000
+;显示所有文件扩展名
+"HideFileExt"=dword:00000000
+
+;取消游戏里“下载有关已安装游戏的技巧和信息”和“收集最近玩过的游戏信息”
+[HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\GameUX]
+"FirstRunDialogLaunched"=dword:00000001
+"DownLoadGameInfo"=dword:00000000
+"ListRecentlyPlayed"=dword:00000000
+
+;语言栏隐藏到任务拦
+[HKEY_CURRENT_USER\Software\Microsoft\CTF\MSUTB]
+"ShowDeskBand"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\CTF\LangBar]
+"ShowStatus"=dword:00000004
+"ExtraIconsOnMinimized"=dword:00000000
+
+;隐藏操作中心
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer]
+"HideSCAHealth"=dword:00000001
+
+;关闭驱动程序验证
+[HKEY_CURRENT_USER\Software\Microsoft\Driver Signing]
+"Policy"=dword:00000001
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Driver Signing]
+"Policy"=hex:01
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows NT\Driver Signing]
+"BehaviorOnFailedVerify"=dword:00000001
+
+;关闭UAC通知
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Security Center]
+"UacDisableNotify"=dword:00000001
+
+;跳过首次打开WMP时出现协议窗口
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsMediaPlayer]
+"GroupPrivacyAcceptance"=dword:00000001
+
+;禁用 家庭组
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\HomeGroup]
+"DisableHomeGroup"=dword:00000001
+
+;IE优化
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Main]
+"DisableFirstRunCustomize"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main]
+"Start Page"="about:blank"
+"AlwaysShowMenus"=dword:00000000
+"RunOnceHasShown"=dword:00000001
+"RunOnceComplete"=dword:00000001
+"Isolation"="PMIL"
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\LinksBar]
+"Enabled"=dword:00000000
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Toolbar]
+"Locked"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Toolbar\WebBrowser]
+"ITBar7Position"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\TabbedBrowsing]
+"WarnOnClose"=dword:00000000
+"OpenInForeground"=dword:00000001
+"OpenAllHomePages"=dword:00000000
+"PopupsUseNewWindow"=dword:00000002
+"ShortcutBehavior"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\SearchScopes]
+"DefaultScope"="{4FF09968-687A-4D3C-B68E-C877DE114418}"
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\SearchScopes\{4FF09968-687A-4D3C-B68E-C877DE114418}]
+"DisplayName"="百度一下"
+"URL"="http://www.baidu.com/s?wd={searchTerms}&ie=utf-8"
+"ShowSearchSuggestions"=dword:00000001
+"FaviconURL"="http://www.baidu.com/favicon.ico"
+"SuggestionsURL"=""
+"SuggestionsURL_JSON"="http://suggestion.baidu.com/su?wd={searchTerms}&action=opensearch&ie={inputEncoding}&from=ie8"
+"PreviewURL"=""
+[-HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\SearchScopes\{0633EE93-D776-472f-A0FF-E1416B8B2E3A}]
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\SearchScopes\{0633EE93-D776-472f-A0FF-E1416B8B2E3A}]
+"Deleted"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Activities\地图\bing.com]
+"Enabled"=dword:00000000
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Activities\电子邮件\live.com]
+"Enabled"=dword:00000000
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Activities\翻译\microsofttranslator.com]
+"Enabled"=dword:00000000
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Activities\博客\live.com]
+"Enabled"=dword:00000000
+;IE去广告
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Safety\PrivacIE]
+"FilteringMode"=dword:00000000
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Safety\PrivacIE\Lists\{77C8DF8B-9502-4FE8-837C-00077879A1C8}]
+"Name"="EasyList China+EasyList"
+"Url"="http://easylist-msie.adblockplus.org/easylistchina+easylist.tpl"
+"Enabled"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Safety\PrivacIE\Lists\{EA4CFFF6-9FDE-45F3-8129-739D045B5ECD}]
+"Name"="Fanboy Adblock List"
+"Url"="http://www.fanboy.co.nz/adblock/ie/fanboy-noele.tpl"
+"Enabled"=dword:00000001

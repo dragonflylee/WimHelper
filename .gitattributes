@@ -1,0 +1,6 @@
+* text eol=crlf
+
+*.exe   binary
+*.tpk   binary
+*.png   binary
+*.bmp   binary

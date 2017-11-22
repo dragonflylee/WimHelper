@@ -1,0 +1,117 @@
+Windows Registry Editor Version 5.00
+
+;显示桌面系统图标
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel]
+"{59031a47-3f72-44a7-89c5-5595fe6b30ee}"=dword:00000000
+"{645FF040-5081-101B-9F08-00AA002F954E}"=dword:00000000
+"{20D04FE0-3AEA-1069-A2D8-08002B30309D}"=dword:00000000
+"{871C5380-42A0-1069-A2EA-08002B30309D}"=dword:00000000
+
+;隐藏我的电脑里的六个文件夹
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{374DE290-123F-4565-9164-39C4925E467B}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{1CF1260C-4DD0-4ebb-811F-33C572699FDE}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{3ADD1653-EB32-4cb0-BBD7-DFA0ABB5ACCA}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{A0953C92-50DC-43bf-BE83-3742FED03C9C}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{A8CDFF1C-4878-43be-B5FD-F8091C1C60D0}]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
+;关闭应用商店中查找应用
+"NoUseStoreOpenWith"=dword:00000001
+;关闭 Aero Shake
+"NoWindowMinimizingShortcuts"=dword:00000001
+
+;跳过首次打开WMP时出现协议窗口
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsMediaPlayer]
+"GroupPrivacyAcceptance"=dword:00000001
+;禁用 Windows Defender
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender]
+"DisableAntiSpyware"=dword:00000001
+;禁用 家庭组
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\HomeGroup]
+"DisableHomeGroup"=dword:00000001
+
+;屏蔽MRT推送
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\MRT]
+"DontOfferThroughWUAU"=dword:00000001
+
+;禁止自动更新驱动程序
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching]
+"SearchOrderConfig"=dword:00000002
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+;显示所有文件扩展名
+"HideFileExt"=dword:00000000
+"Hidden"=dword:00000002
+;不显示复选框
+"AutoCheckSelect"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+;去掉快捷方式字样
+"link"=hex:00,00,00,00
+;快速访问中不显示最近文件和常用文件夹
+"ShowRecent"=dword:00000000
+"ShowFrequent"=dword:00000000
+
+;IE优化
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Main]
+"DisableFirstRunCustomize"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main]
+"Start Page"="about:blank"
+"AlwaysShowMenus"=dword:00000000
+"RunOnceHasShown"=dword:00000001
+"RunOnceComplete"=dword:00000001
+"Isolation"="PMIL"
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\LinksBar]
+"Enabled"=dword:00000000
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Toolbar]
+"Locked"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Toolbar\WebBrowser]
+"ITBar7Position"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\TabbedBrowsing]
+"WarnOnClose"=dword:00000000
+"OpenInForeground"=dword:00000001
+"OpenAllHomePages"=dword:00000000
+"PopupsUseNewWindow"=dword:00000002
+"ShortcutBehavior"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\SearchScopes]
+"DefaultScope"="{4FF09968-687A-4D3C-B68E-C877DE114418}"
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\SearchScopes\{4FF09968-687A-4D3C-B68E-C877DE114418}]
+"DisplayName"="百度一下"
+"URL"="http://www.baidu.com/s?wd={searchTerms}&ie=utf-8"
+"ShowSearchSuggestions"=dword:00000001
+"FaviconURL"="http://www.baidu.com/favicon.ico"
+"SuggestionsURL"=""
+"SuggestionsURL_JSON"="http://suggestion.baidu.com/su?wd={searchTerms}&action=opensearch&ie={inputEncoding}&from=ie8"
+"PreviewURL"=""
+[-HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\SearchScopes\{0633EE93-D776-472f-A0FF-E1416B8B2E3A}]
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\SearchScopes\{0633EE93-D776-472f-A0FF-E1416B8B2E3A}]
+"Deleted"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Activities\地图\bing.com]
+"Enabled"=dword:00000000
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Activities\电子邮件\live.com]
+"Enabled"=dword:00000000
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Activities\翻译\microsofttranslator.com]
+"Enabled"=dword:00000000
+;IE去广告
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Safety\PrivacIE]
+"FilteringMode"=dword:00000000
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Safety\PrivacIE\Lists\{77C8DF8B-9502-4FE8-837C-00077879A1C8}]
+"Name"="EasyList China+EasyList"
+"Url"="http://easylist-msie.adblockplus.org/easylistchina+easylist.tpl"
+"Enabled"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Safety\PrivacIE\Lists\{EA4CFFF6-9FDE-45F3-8129-739D045B5ECD}]
+"Name"="Fanboy Adblock List"
+"Url"="http://www.fanboy.co.nz/adblock/ie/fanboy-noele.tpl"
+"Enabled"=dword:00000001
+;在单独一行上显示选项卡
+[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\MINIE]
+"ShowTabsBelowAddressBar"=dword:00000000
+
+;UTC 时间
+;[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\TimeZoneInformation]
+;"RealTimeIsUniversal"=dword:00000001
+
+;取消OneDrive安装
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run]
+"OneDriveSetup"=-
