@@ -35,75 +35,80 @@ goto :Start
 rem 处理镜像 [ %~1 : 镜像文件路径 ]
 :MakeWim
 if /i "%~x1" equ ".esd" ( call :MakeESD "%~1" && goto :eof )
-for /f "tokens=3" %%f in ('Dism.exe /English /Get-ImageInfo /ImageFile:"%~1" ^| findstr /i Index') do ( set "ImageCount=%%f" )
-for /l %%f in (1, 1, %ImageCount%) do call :MakeWimIndex "%~1", %%f, "%MNT%"
+for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" ^| findstr /i Index') do ( set "ImageCount=%%f" )
+for /l %%f in (1, 1, %ImageCount%) do call :MakeWimIndex "%~1", "%%f"
 call :ImageOptimize "%~1"
-rem 导出为ESD镜像
-if /i "%~x2" equ ".esd" %Dism% /Export-Image /SourceImageFile:"%~1" /All /DestinationImageFile:"%~2" /CheckIntegrity /Compress:recovery
 goto :eof
 
 rem 处理镜像 [ %~1 : 镜像文件路径 ]
 :MakeESD
 setlocal
-set "WimPath=%TMP%\%~n1.wim"
-Dism.exe /Export-Image /SourceImageFile:"%~1" /All /DestinationImageFile:"%WimPath%" /CheckIntegrity /Compress:max
-call :MakeWim "%WimPath%", "%~1"
+set "WimPath=%TMP%\%~n1_%time:~0,2%%time:~3,2%%time:~5,2%.wim"
+%Dism% /Export-Image /SourceImageFile:"%~1" /All /DestinationImageFile:"%WimPath%" /Compress:max
+call :MakeWim "%WimPath%"
+rem 导出为ESD镜像
+call :RemoveFile "%~1"
+%Dism% /Export-Image /SourceImageFile:"%WimPath%" /All /DestinationImageFile:"%~1" /Compress:recovery
 call :RemoveFile "%WimPath%"
 endlocal
 goto :eof
 
-rem 处理镜像 [ %~1 : 镜像文件路径, %~2 : 镜像序号, %~3 : 挂载路径 ]
+rem 处理镜像 [ %~1 : 镜像文件路径, %~2 : 镜像序号 ]
 :MakeWimIndex
-call :GetImageInfo "%~1", %~2
+call :GetImageInfo "%~1", "%~2"
 title 正在处理 [%~2] 镜像 %ImageName% 版本 %ImageVersion% 语言 %ImageLanguage%
-%Dism% /Mount-Wim /WimFile:"%~1" /Index:%~2 /MountDir:"%~3"
-call :RemoveAppx "%~3"
-for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.%ImageArch%.txt" 2^>nul') do call :RemoveComponent "%~3", "%%f"
-call :IntRollupFix "%~3"
-call :AddAppx "%~3", "DesktopAppInstaller", "VCLibs.14"
-call :AddAppx "%~3", "Store", "Runtime.1.6 Framework.1.6"
-call :AddAppx "%~3", "FoxitMobilePDF"
-call :ImportOptimize "%~3"
-call :ImportUnattend "%~3"
-call :ImageClean "%~3"
-%Dism% /Commit-Image /MountDir:"%~3"
-call :ImportUnattend "%~3", "Admin"
-call :ImageClean "%~3"
-%Dism% /Commit-Image /MountDir:"%~3" /Append
-%Dism% /Unmount-Wim /MountDir:"%~3" /Discard
+%Dism% /Mount-Wim /WimFile:"%~1" /Index:%~2 /MountDir:"%MNT%"
+call :MakeWimClean "%MNT%"
 rem 处理Admin分卷
-set /a "ImageAdmin=%ImageCount%+%~2"
+for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" ^| findstr /i Index') do ( set "Index=%%f" )
+if "%Index%" leq "%ImageCount%" goto :eof
 %Dism% /Export-Image /SourceImageFile:"%~1" /SourceIndex:%~2 /DestinationImageFile:"%TMP%\%~nx1"
-%Dism% /Export-Image /SourceImageFile:"%~1" /SourceIndex:%ImageAdmin% /DestinationImageFile:"%TMP%\%~nx1" /DestinationName:"%ImageName% [Admin]"
+%Dism% /Export-Image /SourceImageFile:"%~1" /SourceIndex:%Index% /DestinationImageFile:"%TMP%\%~nx1" /DestinationName:"%ImageName% [Admin]"
 goto :eof
 
-rem 处理lopatkin镜像 [ %~1 : 镜像文件路径, %~2 : 镜像序号, %~3 : 挂载路径 ]
-:MakeWimIndex2
-call :GetImageInfo "%~1", %~2
-title 正在处理 [%~2] 镜像 %ImageName% 版本 %ImageVersion% 语言 %ImageLanguage%
-%Dism% /Mount-Wim /WimFile:"%~1" /Index:%~2 /MountDir:"%~3"
+
+rem 处理原版镜像 [ %~1 : 镜像挂载路径 ]
+:MakeWimClean
+call :RemoveAppx "%~1"
+for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%~1", "%%f"
+call :IntRollupFix "%~1"
+call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs.14"
+call :AddAppx "%~1", "Store", "Runtime.1.6 Framework.1.6"
+call :AddAppx "%~1", "FoxitMobilePDF"
+call :ImportOptimize "%~1"
+call :ImportUnattend "%~1"
+call :ImageClean "%~1"
+%Dism% /Commit-Image /MountDir:"%~1"
+call :ImportUnattend "%~1", "Admin"
+call :ImageClean "%~1"
+%Dism% /Commit-Image /MountDir:"%~1" /Append
+%Dism% /Unmount-Wim /MountDir:"%~1" /Discard
+goto :eof
+
+rem 处理lopatkin镜像 [ %~1 : 镜像挂载路径 ]
+:lopatkin
 rem 修复默认用户头像
-xcopy /E /I /H /R /Y /J "%~dp0Pack\UAP\%ImageShortVersion%\*.*" "%~3\ProgramData\Microsoft\User Account Pictures" >nul
-call :MountImageRegistry "%~3"
+xcopy /E /I /H /R /Y /J "%~dp0Pack\UAP\%ImageShortVersion%\*.*" "%~1\ProgramData\Microsoft\User Account Pictures" >nul
+call :MountImageRegistry "%~1"
 rem 修复默认主题
-call :RemoveFolder "%~3\Windows\Web\Wallpaper\Theme1"
-call :RemoveFile "%~3\Windows\Resources\Themes\Theme1.theme"
+call :RemoveFolder "%~1\Windows\Web\Wallpaper\Theme1"
+call :RemoveFile "%~1\Windows\Resources\Themes\Theme1.theme"
 reg add "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\LastTheme" /v "ThemeFile" /t REG_EXPAND_SZ /d "%%SystemRoot%%\Resources\Themes\Aero.theme" /f >nul
 rem 修复设备管理器英文
 for /f "tokens=2 delims=@," %%j in ('reg query "HKLM\TK_SYSTEM\ControlSet001\Control\Class" /v "ClassDesc" /s ^| findstr /i inf') do (
     for %%i in (System32\DriverStore\zh-CN INF) do (
-        for %%f in (%SystemRoot%\%%i\%%j*) do %NSudo% cmd.exe /c copy /Y "%%f" "%~3\Windows\%%i\%%~nxf"
+        for %%f in (%SystemRoot%\%%i\%%j*) do %NSudo% cmd.exe /c copy /Y "%%f" "%~1\Windows\%%i\%%~nxf"
     )
 )
 call :UnMountImageRegistry
-call :ImportOptimize "%~3"
+call :ImportOptimize "%~1"
 if "%ImageType%" equ "Server" (
-    call :ImportUnattend "%~3"
+    call :ImportUnattend "%~1"
 ) else (
-    call :ImportUnattend "%~3", "Admin"
+    call :ImportUnattend "%~1", "Admin"
 )
-call :ImageClean "%~3"
-%Dism% /Unmount-Wim /MountDir:"%~3" /Commit
+call :ImageClean "%~1"
+%Dism% /Unmount-Wim /MountDir:"%~1" /Commit
 goto :eof
 
 rem ############################################################################################
@@ -152,7 +157,7 @@ if not exist "%WinrePath%" (
     echo.保存镜像 [%WinrePath%]
     %Dism% /Unmount-Wim /MountDir:"%TMP%\RE" /Commit /Quiet
     echo.优化镜像 [%WinrePath%]
-    %Dism% /Export-Image /SourceImageFile:"%~1\Windows\System32\Recovery\Winre.wim" /All /DestinationImageFile:"%WinrePath%" /CheckIntegrity /Compress:max /Quiet
+    %Dism% /Export-Image /SourceImageFile:"%~1\Windows\System32\Recovery\Winre.wim" /All /DestinationImageFile:"%WinrePath%" /Compress:max /Quiet
 )
 copy /Y "%WinrePath%" "%~1\Windows\System32\Recovery\Winre.wim" >nul
 endlocal
@@ -189,6 +194,9 @@ if "%ImageShortVersion%" equ "10.0" (
     Reg add "HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\Holographic" /v "FirstRunSucceeded" /t REG_DWORD /d "0" /f >nul
     rem 启用照片查看器
     %NSudo% cmd.exe /c "%~dp0Pack\Optimize\Photo.cmd"
+    rem 延迟功能更新
+    if "%ImageVersion%" leq "10.0.15063" Reg add "HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferFeatureUpdatesPeriodInDays" /t REG_DWORD /d "365" /f >nul
+    rem 右键菜单优化
     call :ImportRegistry "%~dp0Pack\Optimize\Context.reg"
     call :ImportStartLayout "%~1", "%~dp0Pack\StartLayout.xml"
 )
@@ -357,12 +365,12 @@ goto :eof
 
 rem 获取镜像基本信息 [ %~1 : 镜像文件路径, %~2 : 镜像序号 ]
 :GetImageInfo
-for /f "tokens=2 delims=:" %%f in ('Dism.exe /English /Get-ImageInfo /ImageFile:"%~1" /Index:%~2 ^| findstr /i Name') do ( set "ImageName=%%f" )
-for /f "tokens=3" %%f in ('Dism.exe /English /Get-ImageInfo /ImageFile:"%~1" /Index:%~2 ^| findstr /i Architecture') do ( set "ImageArch=%%f" )
-for /f "tokens=3" %%f in ('Dism.exe /English /Get-ImageInfo /ImageFile:"%~1" /Index:%~2 ^| findstr /i Version') do ( set "ImageVersion=%%f" )
-for /f "tokens=3" %%f in ('Dism.exe /English /Get-ImageInfo /ImageFile:"%~1" /Index:%~2 ^| findstr /i Edition') do ( set "ImageEdition=%%f" )
-for /f "tokens=3" %%f in ('Dism.exe /English /Get-ImageInfo /ImageFile:"%~1" /Index:%~2 ^| findstr /i Installation') do ( set "ImageType=%%f" )
-for /f "tokens=* delims=" %%f in ('Dism.exe /English /Get-ImageInfo /ImageFile:"%~1" /Index:%~2 ^| findstr /i Default') do ( set "ImageLanguage=%%f" && set "ImageLanguage=!ImageLanguage:~1,-10!" )
+for /f "tokens=2 delims=:" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:%~2 ^| findstr /i Name') do ( set "ImageName=%%f" )
+for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:%~2 ^| findstr /i Architecture') do ( set "ImageArch=%%f" )
+for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:%~2 ^| findstr /i Version') do ( set "ImageVersion=%%f" )
+for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:%~2 ^| findstr /i Edition') do ( set "ImageEdition=%%f" )
+for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:%~2 ^| findstr /i Installation') do ( set "ImageType=%%f" )
+for /f "tokens=* delims=" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:%~2 ^| findstr /i Default') do ( set "ImageLanguage=%%f" && set "ImageLanguage=!ImageLanguage:~1,-10!" )
 for /f "tokens=1,2 delims=." %%f in ('echo %ImageVersion%') do ( set "ImageShortVersion=%%f.%%g" )
 goto :eof
 
@@ -376,10 +384,10 @@ goto :eof
 rem 清理文件
 :CleanUp
 call :UnMountImageRegistry
-if exist "%MNT%\Windows" ( Dism.exe /Unmount-Wim /MountDir:"%MNT%" /ScratchDir:"%TMP%" /Discard /Quiet )
-if exist "%TMP%\RE\Windows" ( Dism.exe /Unmount-Wim /MountDir:"%TMP%\RE" /ScratchDir:"%TMP%" /Discard /Quiet )
-Dism.exe /Cleanup-Mountpoints /Quiet
-Dism.exe /Cleanup-Wim /Quiet
+if exist "%MNT%\Windows" ( %Dism% /Unmount-Wim /MountDir:"%MNT%" /ScratchDir:"%TMP%" /Discard /Quiet )
+if exist "%TMP%\RE\Windows" ( %Dism% /Unmount-Wim /MountDir:"%TMP%\RE" /ScratchDir:"%TMP%" /Discard /Quiet )
+%Dism% /Cleanup-Mountpoints /Quiet
+%Dism% /Cleanup-Wim /Quiet
 call :RemoveFolder "%TMP%"
 call :RemoveFolder "%MNT%"
 if errorlevel 0 goto :eof
@@ -399,4 +407,3 @@ goto :eof
 call :CleanUp
 endlocal EnableDelayedExpansion
 title 操作完成
-if "%~1" equ "" pause

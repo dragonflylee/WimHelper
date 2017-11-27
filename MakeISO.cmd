@@ -29,9 +29,9 @@ if exist "%DVD%\sources\ei.cfg" del /f /q "%DVD%\sources\ei.cfg"
 )>"%DVD%\sources\ei.cfg"
 rem ÅÐ¶ÏUEFIÒýµ¼
 if exist "%UEFIBoot%" (
-   "%Oscdimg%" -bootdata:2#p0,e,b"%BIOSBoot%"#pEF,e,b"%UEFIBoot%" -o -h -m -u2 -udfver102 "%DVD%" "%ISOFileName%"
+   "%Oscdimg%" -bootdata:2#p0,e,b"%BIOSBoot%"#pEF,e,b"%UEFIBoot%" -o -h -m -u2 -udfver102 -l"%ISOLabel%" "%DVD%" "%ISOFileName%"
 ) else (
-   "%Oscdimg%" -bootdata:1#p0,e,b"%BIOSBoot%" -o -h -m -u2 -udfver102 "%DVD%" "%ISOFileName%"
+   "%Oscdimg%" -bootdata:1#p0,e,b"%BIOSBoot%" -o -h -m -u2 -udfver102 -l"%ISOLabel%" "%DVD%" "%ISOFileName%"
 )
 goto :Exit
 
