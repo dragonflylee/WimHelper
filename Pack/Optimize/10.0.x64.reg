@@ -16,3 +16,7 @@ Windows Registry Editor Version 5.00
 "ThisPCPolicy"="Hide"
 [HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{31C0DD25-9439-4F12-BF41-7FF4EDA38722}\PropertyBag]
 "ThisPCPolicy"="Hide"
+
+;Òþ²ØOneDrive±ßÀ¸
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Classes\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}]
+"System.IsPinnedToNameSpaceTree"=dword:00000000

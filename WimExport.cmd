@@ -40,9 +40,6 @@ for %%i in (combinedchina enterprise) do (
 )
 if not exist "%WimPath%" goto :eof
 call :MakeISO "%WimPath%", "%~2"
-rem 生成二合一镜像
-rem %Dism% /Export-Image /SourceImageFile:"%WimPath%" /All /DestinationImageFile:"%~dp0cn_windows_10_1703_%ImageRevision%.%ImageBuild%_x86_x64.esd" /Compress:recovery
-call :RemoveFile "%WimPath%"
 goto :eof
 
 rem 导出RS3镜像 [ %~1 : 源路径, %~2 : 目标路径, %~3 处理器架构 ]
@@ -59,9 +56,6 @@ for %%i in (consumer china business) do (
     )
 )
 call :MakeISO "%WimPath%", "%~2"
-rem 生成二合一镜像
-%Dism% /Export-Image /SourceImageFile:"%WimPath%" /All /DestinationImageFile:"%~dp0cn_windows_10_1709_%ImageRevision%.%ImageBuild%_x86_x64.esd" /Compress:recovery
-call :RemoveFile "%WimPath%"
 goto :eof
 
 rem 生成ISO [ %~1 : 源路径, %~2 : 目标路径 ]
@@ -75,6 +69,14 @@ for /f "tokens=3 delims=." %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%
 for /f "tokens=4" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:1 ^| find "ServicePack Level"') do ( set "ImageBuild=%%f" )
 for /f "tokens=* delims=" %%f in ('Dism.exe /English /Get-ImageInfo /ImageFile:"%~1" /Index:1 ^| findstr /i Default') do ( set "ImageLanguage=%%f" )
 call "%~dp0MakeISO.cmd" "%~2" "Win10_%ImageRevision%.%ImageBuild%_%ImageArch%_%ImageLanguage:~1,-10%"
+rem 生成二合一镜像
+set "ESDPath=%~dp0cn_windows_10_%ImageRevision%.%ImageBuild%_x86_x64.esd"
+if exist "%ESDPath%" (
+    %Dism% /Export-Image /SourceImageFile:"%~1" /All /DestinationImageFile:"%ESDPath%" /Compress:recovery
+) else (
+    move "%~2\sources\install.esd" "%ESDPath%" >nul
+)
+call :RemoveFile "%~1"
 call :RemoveFolder "%~2"
 goto :eof
 

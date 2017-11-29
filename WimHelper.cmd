@@ -184,7 +184,7 @@ call :ImportRegistry "%~dp0Pack\Optimize\%ImageShortVersion%.%ImageArch%.reg"
 if "%ImageType%" equ "Server" call :ImportRegistry "%~dp0Pack\Optimize\Server.reg"
 if "%ImageShortVersion%" equ "10.0" (
     rem Applying Anti Microsoft Telemetry Client Patches
-    Reg add "HKLM\TK_SYSTEM\ControlSet001\Services\DiagTrack" /v "Start" /t REG_DWORD /d "4" /f >nul
+    Reg add "HKLM\TK_SYSTEM\ControlSet001\Services\DiagTrack" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
     Reg delete "HKLM\TK_SYSTEM\ControlSet001\Control\WMI\AutoLogger\AutoLogger-Diagtrack-Listener" /f >nul 2>&1
     Reg delete "HKLM\TK_SYSTEM\ControlSet001\Control\WMI\AutoLogger\Diagtrack-Listener" /f >nul 2>&1
     Reg delete "HKLM\TK_SYSTEM\ControlSet001\Control\WMI\AutoLogger\SQMLogger" /f >nul 2>&1
@@ -192,8 +192,14 @@ if "%ImageShortVersion%" equ "10.0" (
     Reg delete "HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\DataCollection" /f >nul 2>&1
     rem Removing Windows Mixed Reality Menu from Settings App
     Reg add "HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\Holographic" /v "FirstRunSucceeded" /t REG_DWORD /d "0" /f >nul
-    rem 启用照片查看器
-    %NSudo% cmd.exe /c "%~dp0Pack\Optimize\Photo.cmd"
+    rem 启用照片查看器, 删除 3D画图 右键
+    Reg add "HKLM\TK_SOFTWARE\Microsoft\Windows Photo Viewer\Capabilities" /v "ApplicationDescription" /t REG_SZ /d "@%%ProgramFiles%%\Windows Photo Viewer\photoviewer.dll,-3069" /f >nul
+    Reg add "HKLM\TK_SOFTWARE\Microsoft\Windows Photo Viewer\Capabilities" /v "ApplicationName" /t REG_SZ /d "@%%ProgramFiles%%\Windows Photo Viewer\photoviewer.dll,-3009" /f >nul
+    for %%t in (.bmp .gif .jfif .ico .jpe .jpeg .jpg .png .tif .tiff) do (
+        Reg add "HKLM\TK_SOFTWARE\Microsoft\Windows Photo Viewer\Capabilities\FileAssociations" /v "%%t" /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f >nul
+        Reg add "HKLM\TK_SOFTWARE\Classes\%%t" /ve /t REG_SZ /d "PhotoViewer.FileAssoc.Tiff" /f >nul 2>&1
+        Reg delete "HKLM\TK_SOFTWARE\Classes\SystemFileAssociations\%%t\Shell\3D Edit" /f >nul 2>&1
+    )
     rem 延迟功能更新
     if "%ImageVersion%" leq "10.0.15063" Reg add "HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferFeatureUpdatesPeriodInDays" /t REG_DWORD /d "365" /f >nul
     rem 右键菜单优化
@@ -260,7 +266,8 @@ if /i "%~2" equ "Admin" (
 )
 if exist "%UnattendFile%" (
     echo.导入应答 [%UnattendFile%]
-    if not exist "%~1\Windows\Panther" md "%~1\Windows\Panther"
+    call :RemoveFolder "%~1\Windows\Panther"
+    md "%~1\Windows\Panther"
     copy /Y "%UnattendFile%" "%~1\Windows\Panther\unattend.xml" >nul
 )
 endlocal
