@@ -1,7 +1,5 @@
 ;遥测服务
 Microsoft-Windows-ContentDeliveryManager-Package
-;Edge浏览器
-Microsoft-Windows-Internet-Browser-Package
 ;混合现实服务
 Microsoft-Windows-Holographic-Desktop-Analog-Package
 Microsoft-Windows-Holographic-Desktop-Merged-Package
@@ -18,3 +16,10 @@ Microsoft-Windows-OneDrive-Setup-Package
 Microsoft-Windows-OneDrive-Setup-WOW64-Package
 ;文件管理器
 Microsoft-Windows-DesktopFileExplorer-Package
+;应用商店
+;Microsoft-Windows-Store-Client-Package
+;Edge浏览器
+;Microsoft-Windows-Internet-Browser-Package
+;Cortana
+;Microsoft-Windows-Cortana-Package
+;Microsoft-Windows-Cortana-PAL-Desktop-Package

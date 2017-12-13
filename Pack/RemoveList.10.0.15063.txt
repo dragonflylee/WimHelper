@@ -3,8 +3,6 @@ Microsoft-OneCore-TroubleShooting-Package
 Microsoft-OneCore-TroubleShooting-WOW64-Package
 Microsoft-OneCore-AllowTelemetry-Reduced-Default-Package
 Microsoft-Windows-ContentDeliveryManager-Package
-;Edge浏览器
-Microsoft-Windows-Internet-Browser-Package
 ;帮助支持
 Microsoft-Windows-ContactSupport-Package
 ;混合现实服务
@@ -27,3 +25,8 @@ Microsoft-Windows-DesktopFileExplorer-Package
 ;OneDrive
 Microsoft-Windows-OneDrive-Setup-Package
 Microsoft-Windows-OneDrive-Setup-WOW64-Package
+;Edge浏览器
+;Microsoft-Windows-Internet-Browser-Package
+;Cortana
+;Microsoft-Windows-Cortana-Package
+;Microsoft-Windows-Cortana-PAL-Desktop-Package
