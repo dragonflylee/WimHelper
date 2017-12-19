@@ -134,6 +134,7 @@ if exist "%RollupPath%" (
     call :IntRecovery "%~1", "%RollupPath%"
 )
 endlocal
+%NSudo% cmd.exe /c rd /s /q "%~1\Windows\WinSxS\Temp\PendingDeletes"
 %NSudo% cmd.exe /c rd /s /q "%~1\Windows\WinSxS\ManifestCache"
 goto :eof
 
