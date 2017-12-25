@@ -135,11 +135,12 @@ rem 系统版本
 for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:%~2 ^| findstr /i Edition') do ( set "ImageEdition=%%f" )
 if "%ImageEdition%" equ "Cloud" ( goto :eof )
 if "%ImageEdition%" equ "CoreCountrySpecific" ( set "ImageName=%ImageName% 家庭中文版" )
-if "%ImageEdition%" equ "CoreSingleLanguage" ( set "ImageName=%ImageName% 家庭单语言版" )
-if "%ImageEdition%" equ "Core" ( set "ImageName=%ImageName% 家庭版" )
+if "%ImageEdition%" equ "CoreSingleLanguage" ( goto :eof )
+if "%ImageEdition%" equ "Core" ( goto :eof )
 if "%ImageEdition%" equ "Education" ( set "ImageName=%ImageName% 教育版" )
 if "%ImageEdition%" equ "Professional" ( set "ImageName=%ImageName% 专业版" )
 if "%ImageEdition%" equ "Enterprise" ( set "ImageName=%ImageName% 企业版" )
+if "%ImageEdition%" equ "EnterpriseS" ( set "ImageName=%ImageName% 企业版 2016 长期服务版" )
 if "%ImageEdition%" equ "ServerStandard" ( set "ImageName=%ImageName% 标准版" )
 if "%ImageEdition%" equ "ServerEnterprise" ( set "ImageName=%ImageName% 企业版" )
 if "%ImageEdition%" equ "ServerWeb" ( set "ImageName=%ImageName% Web版" )
@@ -167,3 +168,4 @@ if exist "%~1" rd /q /s "%~1"
 goto :eof
 
 :Exit
+rem shutdown -s -t 0

@@ -25,7 +25,8 @@
 
 系统|版本号|32位|64位
 ----|------|----|----
-Win10 1709|[10.0.16299.15](https://download.microsoft.com/download/1/8/4/1842B01F-2F6F-481C-A86F-0B62E14B259E/ProductsRS311202017.xml)|[China](http://fg.ds.b1.download.windowsupdate.com/c/Upgr/2017/10/16299.15.170928-1534.rs3_release_clientchina_ret_x86fre_zh-cn_1e9f9ef43f16fdd67a2cc4749ed6c38c9058705c.esd) [Consumer](http://fg.ds.b1.download.windowsupdate.com/c/Upgr/2017/10/16299.15.170928-1534.rs3_release_clientconsumer_ret_x86fre_zh-cn_b411ad9fd3236d4cf5ec7d3debe0ef155791995f.esd) [Business](http://wsus.ds.b1.download.windowsupdate.com/c/upgr/2017/10/16299.15.170928-1534.rs3_release_clientbusiness_vol_x86fre_zh-cn_4b0a6afdf690b2424f083d4b6633dd9f7f1ab0e1.esd)|[China](http://fg.ds.b1.download.windowsupdate.com/c/Upgr/2017/10/16299.15.170928-1534.rs3_release_clientchina_ret_x64fre_zh-cn_b96c8d4f2beb0666dc965ed012bc59468269e1d8.esd) [Consumer](http://fg.ds.b1.download.windowsupdate.com/c/Upgr/2017/10/16299.15.170928-1534.rs3_release_clientconsumer_ret_x64fre_zh-cn_cc52c191fda2caff9d5b6730ee88a11758dc0138.esd) [Business](http://wsus.ds.b1.download.windowsupdate.com/c/upgr/2017/10/16299.15.170928-1534.rs3_release_clientbusiness_vol_x64fre_zh-cn_d6bf989c6b57c7246fa72fec1e564808c3ee3255.esd)
+Win10 1709|[10.0.16299.15](https://download.microsoft.com/download/A/F/7/AF7CF8A4-9A20-4117-A0A1-4243F835D2BF/ProductsRS3RTM10032017.xml)|[China](http://fg.ds.b1.download.windowsupdate.com/c/Upgr/2017/10/16299.15.170928-1534.rs3_release_clientchina_ret_x86fre_zh-cn_1e9f9ef43f16fdd67a2cc4749ed6c38c9058705c.esd) [Consumer](http://fg.ds.b1.download.windowsupdate.com/c/Upgr/2017/10/16299.15.170928-1534.rs3_release_clientconsumer_ret_x86fre_zh-cn_b411ad9fd3236d4cf5ec7d3debe0ef155791995f.esd) [Business](http://wsus.ds.b1.download.windowsupdate.com/c/upgr/2017/10/16299.15.170928-1534.rs3_release_clientbusiness_vol_x86fre_zh-cn_4b0a6afdf690b2424f083d4b6633dd9f7f1ab0e1.esd)|[China](http://fg.ds.b1.download.windowsupdate.com/c/Upgr/2017/10/16299.15.170928-1534.rs3_release_clientchina_ret_x64fre_zh-cn_b96c8d4f2beb0666dc965ed012bc59468269e1d8.esd) [Consumer](http://fg.ds.b1.download.windowsupdate.com/c/Upgr/2017/10/16299.15.170928-1534.rs3_release_clientconsumer_ret_x64fre_zh-cn_cc52c191fda2caff9d5b6730ee88a11758dc0138.esd) [Business](http://wsus.ds.b1.download.windowsupdate.com/c/upgr/2017/10/16299.15.170928-1534.rs3_release_clientbusiness_vol_x64fre_zh-cn_d6bf989c6b57c7246fa72fec1e564808c3ee3255.esd)
+Win10 1709|[10.0.16299.125](https://download.microsoft.com/download/6/B/E/6BE41520-60B6-4F34-AECE-A5EBFA9155B3/ProductsRS312152017.xml)|[China](http://fg.ds.b1.download.windowsupdate.com/c/Upgr/2017/12/16299.125.171213-1220.rs3_release_svc_refresh_clientchina_ret_x86fre_zh-cn_94ebddec3f8b8d1f89ef377a71c6e6580ab25fa9.esd) [Consumer](http://fg.ds.b1.download.windowsupdate.com/c/Upgr/2017/12/16299.125.171213-1220.rs3_release_svc_refresh_clientconsumer_ret_x86fre_zh-cn_ed3dad3c008e7947679689491971e027db03a0f9.esd)| [China](http://fg.ds.b1.download.windowsupdate.com/c/Upgr/2017/12/16299.125.171213-1220.rs3_release_svc_refresh_clientchina_ret_x64fre_zh-cn_57a3ca8dc6d5e83c220cb77464afeb869ef2d983.esd) [Consumer](http://fg.ds.b1.download.windowsupdate.com/c/Upgr/2017/12/16299.125.171213-1220.rs3_release_svc_refresh_clientconsumer_ret_x64fre_zh-cn_a706bd3db9fe8d00ad1df2a1ae680ee54278878d.esd)
 
 ### 2. 更新补丁获取
 
@@ -41,7 +42,9 @@ Win10 1709|10.0.16299|[32位](http://www.catalog.update.microsoft.com/Search.asp
 
 ### 3. .Net 3.5 封包获取
 
-将安装镜像中的 `\sources\sxs\microsoft-windows-netfx3-ondemand-package.cab` 复制到 `Pack\NetFx3\镜像版本号` 中
+系统|版本号|更新
+----|------|-------
+Win10 1709|10.0.16299|[32位](http://download.windowsupdate.com/d/msdownload/update/software/updt/2017/10/microsoft-windows-netfx3-ondemand-package_d3d134a6c583c6c481d9c8cd075bd5d39a8f0a51.cab) [64位](http://download.windowsupdate.com/c/msdownload/update/software/updt/2017/10/microsoft-windows-netfx3-ondemand-package_57a139ab7ec48a144affd233a83fb579f873e856.cab)
 
 ### 4. 组件精简设定
 

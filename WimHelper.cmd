@@ -9,6 +9,7 @@ cls
 setlocal EnableDelayedExpansion
 set NSudo="%~dp0Bin\%PROCESSOR_ARCHITECTURE%\NSudo.exe"
 set "Dism=Dism.exe /NoRestart /LogLevel:1"
+set "SRC=%SystemDrive%"
 set "MNT=%~dp0Mount"
 set "TMP=%~dp0Temp"
 set "ImagePath=%~1"
@@ -88,7 +89,7 @@ goto :eof
 rem 处理lopatkin镜像 [ %~1 : 镜像挂载路径 ]
 :lopatkin
 rem 修复默认用户头像
-xcopy /E /I /H /R /Y /J "%~dp0Pack\UAP\%ImageShortVersion%\*.*" "%~1\ProgramData\Microsoft\User Account Pictures" >nul
+xcopy /E /I /H /R /Y /J "%SRC%\ProgramData\Microsoft\User Account Pictures\*.*" "%~1\ProgramData\Microsoft\User Account Pictures" >nul
 call :MountImageRegistry "%~1"
 rem 修复默认主题
 call :RemoveFolder "%~1\Windows\Web\Wallpaper\Theme1"
@@ -97,10 +98,14 @@ reg add "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\LastTheme" /v 
 rem 修复设备管理器英文
 for /f "tokens=2 delims=@," %%j in ('reg query "HKLM\TK_SYSTEM\ControlSet001\Control\Class" /v "ClassDesc" /s ^| findstr /i inf') do (
     for %%i in (System32\DriverStore\zh-CN INF) do (
-        for %%f in (%SystemRoot%\%%i\%%j*) do %NSudo% cmd.exe /c copy /Y "%%f" "%~1\Windows\%%i\%%~nxf"
+        for %%f in (%SRC%\Windows\%%i\%%j*) do %NSudo% cmd.exe /c copy /Y "%%f" "%~1\Windows\%%i\%%~nxf"
     )
 )
 call :UnMountImageRegistry
+call :RemoveFolder "%~1\Program Files (x86)\Trey"
+call :RemoveFolder "%~1\Program Files\Trey"
+call :RemoveFile "%~1\Windows\KEY_Aquarium-Screensavers.txt"
+call :RemoveFile "%~1\Windows\System32\MA2_6.scr"
 call :ImportOptimize "%~1"
 if "%ImageType%" equ "Server" (
     call :ImportUnattend "%~1"
@@ -394,8 +399,6 @@ rem 清理文件
 call :UnMountImageRegistry
 if exist "%MNT%\Windows" ( %Dism% /Unmount-Wim /MountDir:"%MNT%" /ScratchDir:"%TMP%" /Discard /Quiet )
 if exist "%TMP%\RE\Windows" ( %Dism% /Unmount-Wim /MountDir:"%TMP%\RE" /ScratchDir:"%TMP%" /Discard /Quiet )
-%Dism% /Cleanup-Mountpoints /Quiet
-%Dism% /Cleanup-Wim /Quiet
 call :RemoveFolder "%TMP%"
 call :RemoveFolder "%MNT%"
 if errorlevel 0 goto :eof
@@ -403,12 +406,12 @@ goto :Exit
 
 rem 删除文件 [ %~1 : 文件路径 ]
 :RemoveFile
-if exist "%~1" del /f /q "%~1"
+if exist "%~1" %NSudo% cmd.exe /c del /f /q "%~1"
 goto :eof
 
 rem 删除目录 [ %~1 : 目录路径 ]
 :RemoveFolder
-if exist "%~1" rd /q /s "%~1"
+if exist "%~1" %NSudo% cmd.exe /c rd /q /s "%~1"
 goto :eof
 
 :Exit
