@@ -59,7 +59,7 @@ rem 处理镜像 [ %~1 : 镜像文件路径, %~2 : 镜像序号 ]
 call :GetImageInfo "%~1", "%~2"
 title 正在处理 [%~2] 镜像 %ImageName% 版本 %ImageVersion% 语言 %ImageLanguage%
 %Dism% /Mount-Wim /WimFile:"%~1" /Index:%~2 /MountDir:"%MNT%"
-call :MakeWimClean "%MNT%"
+call :lopatkin "%MNT%"
 rem 处理Admin分卷
 for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" ^| findstr /i Index') do ( set "Index=%%f" )
 if "%Index%" leq "%ImageCount%" goto :eof
@@ -97,21 +97,18 @@ call :RemoveFile "%~1\Windows\Resources\Themes\Theme1.theme"
 reg add "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\LastTheme" /v "ThemeFile" /t REG_EXPAND_SZ /d "%%SystemRoot%%\Resources\Themes\Aero.theme" /f >nul
 rem 修复设备管理器英文
 for /f "tokens=2 delims=@," %%j in ('reg query "HKLM\TK_SYSTEM\ControlSet001\Control\Class" /v "ClassDesc" /s ^| findstr /i inf') do (
-    for %%i in (System32\DriverStore\zh-CN INF) do (
+    for %%i in (System32\DriverStore\%ImageLanguage% INF) do (
         for %%f in (%SRC%\Windows\%%i\%%j*) do %NSudo% cmd.exe /c copy /Y "%%f" "%~1\Windows\%%i\%%~nxf"
     )
 )
 call :UnMountImageRegistry
 call :RemoveFolder "%~1\Program Files (x86)\Trey"
 call :RemoveFolder "%~1\Program Files\Trey"
+call :RemoveFile "%~1\Users\Default\Desktop\Green Christmas Tree.lnk"
 call :RemoveFile "%~1\Windows\KEY_Aquarium-Screensavers.txt"
 call :RemoveFile "%~1\Windows\System32\MA2_6.scr"
 call :ImportOptimize "%~1"
-if "%ImageType%" equ "Server" (
-    call :ImportUnattend "%~1"
-) else (
-    call :ImportUnattend "%~1", "Admin"
-)
+call :ImportUnattend "%~1"
 call :ImageClean "%~1"
 %Dism% /Unmount-Wim /MountDir:"%~1" /Commit
 goto :eof
