@@ -1,1 +1,18 @@
-Windows Registry Editor Version 5.00;禁用按 CTRL+ALT+DEL[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]"DisableCAD"=dword:00000001;禁用按锁屏画面[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization]"NoLockScreen"=dword:00000001;禁用关机事件跟踪[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsNT\Reliability]"ShutdownReasonOn"=dword:00000000"ShutdownReasonUI"=dword:00000000;启动不显示管理您的服务器[HKEY_CURRENT_USER\SOFTWARE\Microsoft\ServerManager]"DoNotOpenServerManagerAtLogon"=dword:00000001
+Windows Registry Editor Version 5.00
+
+;禁用按 CTRL+ALT+DEL
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
+"DisableCAD"=dword:00000001
+
+;禁用按锁屏画面
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization]
+"NoLockScreen"=dword:00000001
+
+;禁用关机事件跟踪
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsNT\Reliability]
+"ShutdownReasonOn"=dword:00000000
+"ShutdownReasonUI"=dword:00000000
+
+;启动不显示管理您的服务器
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\ServerManager]
+"DoNotOpenServerManagerAtLogon"=dword:00000001
