@@ -68,6 +68,8 @@ Win10 1709|10.0.16299|[32位](http://download.windowsupdate.com/d/msdownload/upd
 
 ## 使用说明
 
-下载 [WimHelper-master.zip](https://github.com/dragonflylee/WimHelper/archive/master.zip) 并解压
+下载 [WimHelper-master.zip](https://github.com/dragonflylee/WimHelper/archive/master.zip) 并解压, 目录结构如下
+
+![](https://github.com/dragonflylee/WimHelper/blob/master/dir.png)
 
 运行 `WimHelper.cmd [wim镜像路径]` 即可享受全自动镜像处理   

@@ -59,7 +59,7 @@ rem 处理镜像 [ %~1 : 镜像文件路径, %~2 : 镜像序号 ]
 call :GetImageInfo "%~1", "%~2"
 title 正在处理 [%~2] 镜像 %ImageName% 版本 %ImageVersion% 语言 %ImageLanguage%
 %Dism% /Mount-Wim /WimFile:"%~1" /Index:%~2 /MountDir:"%MNT%"
-call :lopatkin "%MNT%"
+call :MakeWimClean "%MNT%"
 rem 处理Admin分卷
 for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" ^| findstr /i Index') do ( set "Index=%%f" )
 if "%Index%" leq "%ImageCount%" goto :eof
