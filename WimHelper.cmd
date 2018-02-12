@@ -75,7 +75,7 @@ for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call 
 call :IntRollupFix "%~1"
 call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs.14"
 call :AddAppx "%~1", "Store", "Runtime.1.6 Framework.1.6"
-call :AddAppx "%~1", "FoxitMobilePDF"
+call :AddAppx "%~1", "WindowsCalculator"
 call :ImportOptimize "%~1"
 call :ImportUnattend "%~1"
 call :ImageClean "%~1"
@@ -102,6 +102,9 @@ for /f "tokens=2 delims=@," %%j in ('reg query "HKLM\TK_SYSTEM\ControlSet001\Con
     )
 )
 call :UnMountImageRegistry
+if "%ImageShortVersion%" equ "10.0" (
+    if "%ImageVersion%" geq "10.0.15063" call :IntExtra "%~1", "Win32Calc"
+)
 call :RemoveFolder "%~1\Program Files (x86)\Trey"
 call :RemoveFolder "%~1\Program Files\Trey"
 call :RemoveFile "%~1\Users\Default\Desktop\Green Christmas Tree.lnk"
@@ -218,10 +221,6 @@ if exist "%AssociationXML%" (
     %Dism% /Image:"%~1" /Import-DefaultAppAssociations:"%AssociationXML%" /Quiet
 )
 endlocal
-
-if "%ImageShortVersion%" equ "10.0" (
-    if "%ImageVersion%" geq "10.0.15063" call :IntExtra "%~1", "Win32Calc"
-)
 goto :eof
 
 rem 集成额外组件 [ %~1 : 镜像挂载路径, %~2 : 组件名称 ]
@@ -342,7 +341,7 @@ for /f "delims=" %%f in ('type "%~1"') do (
     set "str=!str:HKEY_LOCAL_MACHINE\SYSTEM=HKEY_LOCAL_MACHINE\TK_SYSTEM!"
     echo !str!>>"%TMP%\%~nx1"
 )
-%NSudo% reg import "%TMP%\%~nx1"
+reg import "%TMP%\%~nx1" >nul 2>&1
 goto :eof
 
 rem 加载注册表 [ %~1 : 镜像挂载路径 ]
