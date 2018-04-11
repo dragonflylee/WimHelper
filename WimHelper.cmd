@@ -309,22 +309,16 @@ rem 移除系统组件 [ %~1 : 镜像挂载路径, %~2 : 组件名称 ]
 setlocal
 rem 处理隐藏组件
 call :MountImageRegistry "%~1"
-set RegKey=
-for /f "tokens=* delims=" %%f in ('reg query "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages" /f "%~2" ^| findstr /i "%~2"') do ( set "RegKey=%%f" )
-if "%RegKey%" neq "" (
-    %NSudo% reg add "%RegKey%" /v Visibility /t REG_DWORD /d 1 /f
-    %NSudo% reg add "%RegKey%" /v DefVis /t REG_DWORD /d 2 /f
-    %NSudo% reg delete "%RegKey%\Owners" /f
-    set RegKey=
+for /f "tokens=* delims=" %%f in ('reg query "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages" /f "%~2" ^| findstr /i "%~2"') do ( 
+    %NSudo% reg add "%%f" /v Visibility /t REG_DWORD /d 1 /f
+    %NSudo% reg add "%%f" /v DefVis /t REG_DWORD /d 2 /f
+    %NSudo% reg delete "%%f\Owners" /f
 )
 call :UnMountImageRegistry
 
-set PackageName=
-for /f "tokens=3 delims=: " %%f in ('%Dism% /English /Image:"%~1" /Get-Packages ^| findstr /i "%~2"') do ( set "PackageName=%%f" ) 
-if "%PackageName%" neq "" (
-    echo.移除组件 [%PackageName%]
-    %Dism% /Image:"%~1" /Remove-Package /PackageName:"%PackageName%" /Quiet
-    set PackageName=
+for /f "tokens=3 delims=: " %%f in ('%Dism% /English /Image:"%~1" /Get-Packages ^| findstr /i "%~2"') do (
+    echo.移除组件 [%%f]
+    %Dism% /Image:"%~1" /Remove-Package /PackageName:"%%f" /Quiet
 )
 endlocal
 goto :eof

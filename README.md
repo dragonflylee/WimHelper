@@ -38,7 +38,7 @@ Win10 1803|[10.0.17133.1](https://download.microsoft.com/download/7/0/9/70920B5A
 Win10 1607|10.0.14393|[32位](http://www.catalog.update.microsoft.com/Search.aspx?q=Windows%2010%20Version%201607+x86) [64位](http://www.catalog.update.microsoft.com/Search.aspx?q=Windows%2010%20Version%201607+x64)
 Win10 1703|10.0.15063|[32位](http://www.catalog.update.microsoft.com/Search.aspx?q=Windows%2010%20Version%201703+x86) [64位](http://www.catalog.update.microsoft.com/Search.aspx?q=Windows%2010%20Version%201703+x64)
 Win10 1709|10.0.16299|[32位](http://www.catalog.update.microsoft.com/Search.aspx?q=Windows%2010%20Version%201709+x86) [64位](http://www.catalog.update.microsoft.com/Search.aspx?q=Windows%2010%20Version%201709+x64)
-Win10 1803|10.0.17133|[32位](http://www.catalog.update.microsoft.com/Search.aspx?q=Windows%2010%20Version%201803+x86) [64位](http://www.catalog.update.microsoft.com/Search.aspx?q=Windows%2010%20Version%201803+x64)
+Win10 1803|10.0.17133|[32位](http://www.catalog.update.microsoft.com/Search.aspx?q=Windows%2010%20Version%20Next+x86) [64位](http://www.catalog.update.microsoft.com/Search.aspx?q=Windows%2010%20Version%20Next+x64)
 
 其中积累更新放置到 `Pack\RollupFix\镜像版本号`，Flash 和其他更新放置到 `Pack\Update\镜像版本号`
 

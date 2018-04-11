@@ -10,7 +10,7 @@ set "ESDPath=%~1"
 
 if "%ESDPath%" equ "" call :SelectFolder
 rem call :ExportISO "E G", "%~dp0install.wim"
-for %%i in (X86 X64) do call :ExportRS3 "%ESDPath%", "%~dp0DVD_%%i", "%%i"
+for %%i in (X86 X64) do call :ExportRS4 "%ESDPath%", "%~dp0DVD_%%i", "%%i"
 goto :Exit
 
 :SelectFolder
@@ -56,6 +56,21 @@ for %%i in (consumer china business) do (
     )
 )
 call :MakeISO "%WimPath%", "%~2"
+goto :eof
+
+rem 导出RS4镜像 [ %~1 : 源路径, %~2 : 目标路径, %~3 处理器架构 ]
+:ExportRS4
+if not exist "%~1" echo [%~1] 不存在 && goto :eof
+set "WimPath=%~dp0install_RS4_%~3_%date:~0,4%%date:~5,2%%date:~8,2%.wim"
+call :RemoveFile "%WimPath%"
+call :RemoveFolder "%~2"
+rem 导出安装镜像
+for %%i in (consumer china business) do (
+    for %%j in ("%~1\*.rs4_release_*%%i*_%~3fre_*.esd") do (
+        call :ExportImage "%%j", "%WimPath%"
+    )
+)
+rem call :MakeISO "%WimPath%", "%~2"
 goto :eof
 
 rem 生成ISO [ %~1 : 源路径, %~2 : 目标路径 ]
