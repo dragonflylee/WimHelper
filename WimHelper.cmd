@@ -102,9 +102,6 @@ for /f "tokens=2 delims=@," %%j in ('reg query "HKLM\TK_SYSTEM\ControlSet001\Con
     )
 )
 call :UnMountImageRegistry
-if "%ImageShortVersion%" equ "10.0" (
-    if "%ImageVersion%" geq "10.0.15063" call :IntExtra "%~1", "Win32Calc"
-)
 call :RemoveFolder "%~1\Program Files (x86)\Trey"
 call :RemoveFolder "%~1\Program Files\Trey"
 call :RemoveFile "%~1\Users\Default\Desktop\Green Christmas Tree.lnk"
@@ -213,7 +210,9 @@ if "%ImageShortVersion%" equ "10.0" (
     call :ImportStartLayout "%~1", "%~dp0Pack\StartLayout.xml"
 )
 call :UnMountImageRegistry
-
+if "%ImageShortVersion%" equ "10.0" (
+    if "%ImageVersion%" geq "10.0.15063" call :IntExtra "%~1", "Win32Calc"
+)
 setlocal
 set "AssociationXML=%~dp0Pack\Association.%ImageShortVersion%.xml"
 if exist "%AssociationXML%" (
@@ -236,11 +235,11 @@ if exist "%ExtraPath%.tpk" (
 if exist "%ExtraPath%.%ImageLanguage%.tpk" (
    %Dism% /Apply-Image /ImageFile:"%ExtraPath%.%ImageLanguage%.tpk" /Index:%PackageIndex% /ApplyDir:"%~1" /CheckIntegrity /Verify /Quiet
 )
-if exist "%ExtraPath%.%ImageArch%.reg" (
-    call :MountImageRegistry "%~1"
-    call :ImportRegistry "%ExtraPath%.%ImageArch%.reg"
-    call :UnMountImageRegistry
-)
+rem if exist "%ExtraPath%.%ImageArch%.reg" (
+rem     call :MountImageRegistry "%~1"
+rem     call :ImportRegistry "%ExtraPath%.%ImageArch%.reg"
+rem     call :UnMountImageRegistry
+rem )
 if exist "%ExtraPath%.cmd" call %ExtraPath%.cmd "%~1" %ImageArch% %ImageLanguage%
 endlocal
 goto :eof
