@@ -315,7 +315,7 @@ for /f "tokens=* delims=" %%f in ('reg query "HKLM\TK_SOFTWARE\Microsoft\Windows
 )
 call :UnMountImageRegistry
 
-for /f "tokens=3 delims=: " %%f in ('%Dism% /English /Image:"%~1" /Get-Packages ^| findstr /i "%~2"') do (
+for /f "tokens=3 delims=: " %%f in ('%Dism% /English /Image:"%~1" /Get-Packages ^| findstr /i "%~2" ^| findstr /v %ImageLanguage%') do (
     echo.ÒÆ³ý×é¼þ [%%f]
     %Dism% /Image:"%~1" /Remove-Package /PackageName:"%%f" /Quiet
 )
