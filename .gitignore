@@ -5,6 +5,7 @@ Pack/Appx/*.Appx
 *.esd
 *.iso
 
-Mount
-Temp
-DVD
+/Mount
+/Temp
+/DVD*
+/Driver

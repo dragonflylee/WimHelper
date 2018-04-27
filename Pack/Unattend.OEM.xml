@@ -8,6 +8,8 @@
                 <Manufacturer>Lenovo</Manufacturer>
                 <HelpCustomized>true</HelpCustomized>
             </OEMInformation>
+            <RegisteredOrganization>Lenovo</RegisteredOrganization>
+            <ComputerName>Yoga730</ComputerName>
         </component>
     </settings>
     <settings pass="oobeSystem">
@@ -23,6 +25,12 @@
                 <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
                 <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
             </OOBE>
+            <DesktopOptimization>
+                <ShowWindowsStoreAppsOnTaskbar>false</ShowWindowsStoreAppsOnTaskbar>
+            </DesktopOptimization>
+            <WindowsFeatures>
+                <ShowInternetExplorer>true</ShowInternetExplorer>
+            </WindowsFeatures>
         </component>
     </settings>
     <settings pass="specialize">

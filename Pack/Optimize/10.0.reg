@@ -35,8 +35,8 @@ Windows Registry Editor Version 5.00
 ;去掉快捷方式字样
 "link"=hex:00,00,00,00
 ;快速访问中不显示最近文件和常用文件夹
-"ShowRecent"=dword:00000000
-"ShowFrequent"=dword:00000000
+;"ShowRecent"=dword:00000000
+;"ShowFrequent"=dword:00000000
 
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 ;显示所有文件扩展名
@@ -48,7 +48,7 @@ Windows Registry Editor Version 5.00
 "LaunchTo"=dword:00000001
 ;开始菜单不显示新安装的项目
 "Start_NotifyNewApps"=dword:00000000
-"Start_TrackProgs"=dword:00000000
+;"Start_TrackProgs"=dword:00000000
 ;不显示任务视图按钮
 "ShowTaskViewButton"=dword:00000000
 ;禁用资源管理器通知

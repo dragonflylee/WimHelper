@@ -24,6 +24,7 @@ title 正在初始化
 call :CleanUp
 md "%TMP%" && md "%MNT%"
 call :MakeWim "%ImagePath%", "%~2"
+rem call :MakeOEM "%ImagePath%", 1
 goto :Exit
 
 rem 选择镜像
@@ -85,6 +86,19 @@ call :ImportUnattend "%~1", "Admin"
 call :ImageClean "%~1"
 %Dism% /Commit-Image /MountDir:"%~1" /Append
 %Dism% /Unmount-Wim /MountDir:"%~1" /Discard
+goto :eof
+
+rem 处理OEM镜像 [ %~1 : 镜像文件路径, %~2 : 镜像序号 ]
+:MakeOEM
+call :GetImageInfo "%~1", "%~2"
+title 正在处理 [%~2] 镜像 %ImageName% 版本 %ImageVersion% 语言 %ImageLanguage%
+%Dism% /Mount-Wim /WimFile:"%~1" /Index:%~2 /MountDir:"%MNT%"
+call :AddAppx "%MNT%", "WacomTechnologyCorp", "VCLibs.14 Runtime.1.4 Framework.1.3"
+call :ImportUnattend "%MNT%", "OEM"
+if exist "%~dp0Driver" %Dism% /Image:"%MNT%" /Add-Driver /Driver:"%~dp0Driver" /recurse /ForceUnsigned 
+call :ImageClean "%MNT%"
+%Dism% /Commit-Image /MountDir:"%MNT%" /Append
+%Dism% /Unmount-Wim /MountDir:"%MNT%" /Discard
 goto :eof
 
 rem 处理lopatkin镜像 [ %~1 : 镜像挂载路径 ]
@@ -253,6 +267,9 @@ if /i "%~2" equ "Admin" (
     call :MountImageRegistry "%~1"
     Reg add "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "FilterAdministratorToken" /t REG_DWORD /d 1 /f >nul
     call :UnMountImageRegistry
+) else if /i "%~2" equ "OEM" (
+    set "UnattendFile=%~dp0Pack\Unattend.OEM.xml"
+    copy "%~dp0Pack\oemlogo.bmp" "%~1\Windows\System32\oemlogo.bmp"
 ) else (
     set "UnattendFile=%~dp0Pack\Unattend.%ImageShortVersion%.xml"
 )

@@ -1,5 +1,5 @@
 ;遥测服务
-Microsoft-Windows-ContentDeliveryManager-Package
+;Microsoft-Windows-ContentDeliveryManager-Package
 ;混合现实服务
 Microsoft-Windows-Holographic-Desktop-Analog-Package
 Microsoft-Windows-Holographic-Desktop-Analog-WOW64-Package
