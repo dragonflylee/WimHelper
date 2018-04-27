@@ -67,6 +67,7 @@ call :RemoveFolder "%~2"
 rem 导出安装镜像
 for %%i in (china consumer) do (
     for %%j in ("%~1\*.rs4_release_*%%i*_%~3fre_*.esd") do (
+        if not exist "%~2" call :ExportDVD "%%j", "%~2"
         call :ExportImage "%%j", "%WimPath%"
     )
 )

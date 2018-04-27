@@ -1,0 +1,8 @@
+;混合现实
+Analog.Holographic.Desktop
+;快速助手
+App.Support.QuickAssist
+;Windows Media Player 播放器
+Media.WindowsMediaPlayer
+;SSH服务
+OpenSSH
