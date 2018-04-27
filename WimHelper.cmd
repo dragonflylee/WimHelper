@@ -211,16 +211,6 @@ if "%ImageShortVersion%" equ "10.0" (
     call :ImportStartLayout "%~1", "%~dp0Pack\StartLayout.xml"
 )
 call :UnMountImageRegistry
-if "%ImageShortVersion%" equ "10.0" (
-    if "%ImageVersion%" geq "10.0.15063" call :IntExtra "%~1", "Win32Calc"
-)
-setlocal
-set "AssociationXML=%~dp0Pack\Association.%ImageShortVersion%.xml"
-if exist "%AssociationXML%" (
-    echo.导入关联 [%AssociationXML%]
-    %Dism% /Image:"%~1" /Import-DefaultAppAssociations:"%AssociationXML%" /Quiet
-)
-endlocal
 goto :eof
 
 rem 集成额外组件 [ %~1 : 镜像挂载路径, %~2 : 组件名称 ]
