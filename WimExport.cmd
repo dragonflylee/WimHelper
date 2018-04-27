@@ -49,7 +49,7 @@ set "WimPath=%~dp0install_RS3_%~3_%date:~0,4%%date:~5,2%%date:~8,2%.wim"
 call :RemoveFile "%WimPath%"
 call :RemoveFolder "%~2"
 rem 导出安装镜像
-for %%i in (consumer china business) do (
+for %%i in (china consumer) do (
     for %%j in ("%~1\*.rs3_release_*%%i*_%~3fre_*.esd") do (
         if not exist "%~2" call :ExportDVD "%%j", "%~2"
         call :ExportImage "%%j", "%WimPath%"
@@ -65,7 +65,7 @@ set "WimPath=%~dp0install_RS4_%~3_%date:~0,4%%date:~5,2%%date:~8,2%.wim"
 call :RemoveFile "%WimPath%"
 call :RemoveFolder "%~2"
 rem 导出安装镜像
-for %%i in (consumer china business) do (
+for %%i in (china consumer) do (
     for %%j in ("%~1\*.rs4_release_*%%i*_%~3fre_*.esd") do (
         call :ExportImage "%%j", "%WimPath%"
     )

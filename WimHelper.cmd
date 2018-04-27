@@ -334,7 +334,7 @@ for /f "delims=" %%f in ('type "%~1"') do (
     set "str=!str:HKEY_LOCAL_MACHINE\SYSTEM=HKEY_LOCAL_MACHINE\TK_SYSTEM!"
     echo !str!>>"%TMP%\%~nx1"
 )
-reg import "%TMP%\%~nx1" >nul 2>&1
+%NSudo% reg import "%TMP%\%~nx1" >nul 2>&1
 goto :eof
 
 rem ╪стьв╒╡А╠М [ %~1 : ╬╣оЯ╧ртьб╥╬╤ ]
