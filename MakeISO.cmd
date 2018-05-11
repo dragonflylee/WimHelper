@@ -10,16 +10,12 @@ rem 选择光盘镜像目录
 if "%DVD%" equ "" call :SelectFolder
 set "BIOSBoot=%DVD%\boot\etfsboot.com"
 set "UEFIBoot=%DVD%\efi\microsoft\boot\efisys.bin"
-rem 判断BIOS引导
-if not exist "%BIOSBoot%" echo %BIOSBoot% 不存在 && goto :Exit
-if not exist "%DVD%\sources\boot.wim" echo boot.wim 不存在 && goto :Exit
-if not exist "%DVD%\sources\install.wim" ( if not exist "%DVD%\sources\install.esd" echo 安装镜像不存在 && goto :Exit )
 rem 自动生成卷标
 call :MakeLabel %DVD%
 if "%ISOFileName%" equ "" ( set "ISOFileName=%~dp0%ISOLabel%.iso" )
 rem 生成ei.cfg
 if exist "%DVD%\sources\ei.cfg" del /f /q "%DVD%\sources\ei.cfg"
-(
+if exist "%DVD%\sources" (
     echo.[EditionID]
     echo.
     echo.[Channel]
@@ -30,8 +26,10 @@ if exist "%DVD%\sources\ei.cfg" del /f /q "%DVD%\sources\ei.cfg"
 rem 判断UEFI引导
 if exist "%UEFIBoot%" (
    "%Oscdimg%" -bootdata:2#p0,e,b"%BIOSBoot%"#pEF,e,b"%UEFIBoot%" -o -h -m -u2 -udfver102 -l"%ISOLabel%" "%DVD%" "%ISOFileName%"
-) else (
+) else if exist "%BIOSBoot%" (
    "%Oscdimg%" -bootdata:1#p0,e,b"%BIOSBoot%" -o -h -m -u2 -udfver102 -l"%ISOLabel%" "%DVD%" "%ISOFileName%"
+) else (
+   "%Oscdimg%" -o -h -m -u2 -udfver102 -l"%ISOLabel%" "%DVD%" "%ISOFileName%"
 )
 goto :Exit
 
