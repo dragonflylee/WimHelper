@@ -23,3 +23,15 @@ Microsoft-Windows-DesktopFileExplorer-Package
 ;Cortana
 ;Microsoft-Windows-Cortana-Package
 ;Microsoft-Windows-Cortana-PAL-Desktop-Package
+
+;Hyper
+HyperV-Guest-Networking-SrIov-onecore-Package
+Microsoft-Hyper-V-ClientEdition-Package
+Microsoft-Windows-HyperV-Guest-Package
+Microsoft-Windows-HyperV-Guest-WOW64-Package
+HyperV-Guest-Networking-Synthetic-Package
+HyperV-Compute-System-VmDirect-Package
+HyperV-Feature-ApplicationGuard-Package
+Microsoft-Windows-PAW-Feature-Package					
+Microsoft-Windows-OneCore-Containers-Opt-Package
+				

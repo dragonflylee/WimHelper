@@ -30,3 +30,11 @@ Microsoft-Windows-OneDrive-Setup-WOW64-Package
 ;Cortana
 ;Microsoft-Windows-Cortana-Package
 ;Microsoft-Windows-Cortana-PAL-Desktop-Package
+
+;Hyper
+Microsoft-Hyper-V-ClientEdition-Package
+Microsoft-Windows-HyperV-Guest-Package
+Microsoft-Windows-HyperV-Guest-WOW64-Package				
+HyperV-Feature-Containers-Package
+HyperV-Host-Compute-Interop-Package
+HyperV-Host-Compute-PowerShell-Module-Package

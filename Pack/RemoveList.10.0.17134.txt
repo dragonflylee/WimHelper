@@ -25,3 +25,17 @@ Microsoft-Windows-DesktopFileExplorer-Package
 ;Microsoft-Windows-Cortana-Package
 ;Microsoft-Windows-Cortana-PAL-Desktop-Package
 OpenSSH-Client-Package
+
+;Hyper
+HyperV-Guest-Networking-SrIov-onecore-Package
+Microsoft-Hyper-V-ClientEdition-Package
+Microsoft-Windows-HyperV-Guest-Package
+Microsoft-Windows-HyperV-Guest-WOW64-Package
+HyperV-Compute-System-VmDirect-Package
+HyperV-Feature-ApplicationGuard-Package
+Microsoft-Hyper-V-Hypervisor-Package
+Microsoft-Windows-PAW-Feature-Package
+HyperV-VID-Package
+Microsoft-Windows-HyperV-HypervisorPlatform-Package
+Microsoft-Windows-HyperV-OptionalFeature-HypervisorPlatform-Package
+Microsoft-Windows-OneCore-Containers-Opt-Package

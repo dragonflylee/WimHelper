@@ -11,7 +11,18 @@ set NSudo="%~dp0Bin\%PROCESSOR_ARCHITECTURE%\NSudo.exe"
 set "Dism=Dism.exe /NoRestart /LogLevel:1"
 
 for %%i in (
-Microsoft-Windows-Holographic-Desktop-Analog-WOW64-Package
+HyperV-Guest-Networking-SrIov-onecore-Package
+Microsoft-Hyper-V-ClientEdition-Package
+Microsoft-Windows-HyperV-Guest-Package
+Microsoft-Windows-HyperV-Guest-WOW64-Package
+HyperV-Compute-System-VmDirect-Package
+HyperV-Feature-ApplicationGuard-Package
+Microsoft-Hyper-V-Hypervisor-Package
+Microsoft-Windows-PAW-Feature-Package
+HyperV-VID-Package
+Microsoft-Windows-HyperV-HypervisorPlatform-Package
+Microsoft-Windows-HyperV-OptionalFeature-HypervisorPlatform-Package
+Microsoft-Windows-OneCore-Containers-Opt-Package
 ) do call :RemoveComponent "%%i"
 goto :Exit
 
