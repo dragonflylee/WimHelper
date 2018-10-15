@@ -1,0 +1,15 @@
+;混合现实服务
+Microsoft-Windows-Not-Supported-On-LTSB-Package
+Microsoft-Windows-Not-Supported-On-LTSB-WOW64-Package
+;快速助手
+Microsoft-Windows-QuickAssist-Package
+;连接
+Microsoft-Windows-Holographic-Desktop-Merged-Package
+Microsoft-Windows-Holographic-Desktop-Merged-WOW64-Package
+Microsoft-Windows-Non-LTSB-RegulatedPackages-Package
+;Edge浏览器
+;Microsoft-Windows-Internet-Browser-Package
+;Cortana
+;Microsoft-Windows-Cortana-Package
+;Microsoft-Windows-Cortana-PAL-Desktop-Package
+OpenSSH-Client-Package

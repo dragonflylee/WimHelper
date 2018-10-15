@@ -10,7 +10,7 @@ set "ESDPath=%~1"
 
 if "%ESDPath%" equ "" call :SelectFolder
 rem call :ExportISO "E G", "%~dp0install.wim"
-for %%i in (X86 X64) do call :ExportRS4 "%ESDPath%", "%~dp0DVD_%%i", "%%i"
+for %%i in (X64) do call :ExportRS5 "%ESDPath%", "%~dp0DVD_%%i", "%%i"
 goto :Exit
 
 :SelectFolder
@@ -58,20 +58,20 @@ for %%i in (china consumer) do (
 call :MakeISO "%WimPath%", "%~2"
 goto :eof
 
-rem 导出RS4镜像 [ %~1 : 源路径, %~2 : 目标路径, %~3 处理器架构 ]
-:ExportRS4
+rem 导出RS5镜像 [ %~1 : 源路径, %~2 : 目标路径, %~3 处理器架构 ]
+:ExportRS5
 if not exist "%~1" echo [%~1] 不存在 && goto :eof
-set "WimPath=%~dp0install_RS4_%~3_%date:~0,4%%date:~5,2%%date:~8,2%.wim"
+set "WimPath=%~dp0install_RS5_%~3_%date:~0,4%%date:~5,2%%date:~8,2%.wim"
 call :RemoveFile "%WimPath%"
 call :RemoveFolder "%~2"
 rem 导出安装镜像
 for %%i in (china consumer) do (
-    for %%j in ("%~1\*.rs4_release_*%%i*_%~3fre_*.esd") do (
+    for %%j in ("%~1\*.rs5_release_*%%i*_%~3fre_*.esd") do (
         if not exist "%~2" call :ExportDVD "%%j", "%~2"
         call :ExportImage "%%j", "%WimPath%"
     )
 )
-rem call :MakeISO "%WimPath%", "%~2"
+call :MakeISO "%WimPath%", "%~2"
 goto :eof
 
 rem 生成ISO [ %~1 : 源路径, %~2 : 目标路径 ]
@@ -104,14 +104,12 @@ rem 获取版本信息
 for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:3 ^| findstr /i Version') do ( set "ImageVersion=%%f" )
 for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:3 ^| findstr /i Architecture') do ( set "ImageArch=%%f" )
 set "NetFx3Path=%~dp0Pack\NetFx3\%ImageVersion%.%ImageArch%"
-if not exist "%NetFx3Path%" xcopy /I /H /R /Y "%~2\sources\sxs" "%NetFx3Path%" >nul
 rem 清理无用文件
 del /q "%~2\setup.exe"
 del /q "%~2\autorun.inf"
 rd /s /q "%~2\support"
 rd /s /q "%~2\boot\zh-cn"
-for /f "tokens=* delims=" %%f in ('dir /a:d /b "%~2\sources"') do rd /s /q "%~2\sources\%%f"
-for /f "tokens=* delims=" %%f in ('dir /a:-d /b "%~2\sources" ^| findstr /v "setup.exe"') do del /q "%~2\sources\%%f"
+rd /s /q "%~2\sources\sxs"
 for /f "tokens=* delims=" %%f in ('dir /a:-d /b "%~2\boot" ^| findstr /v "bcd boot.sdi etfsboot.com"') do del /q "%~2\boot\%%f"
 for /f "tokens=* delims=" %%f in ('dir /a:-d /b "%~2\boot\fonts" ^| findstr /v "chs wgl4"') do del /q "%~2\boot\fonts\%%f"
 for /f "tokens=* delims=" %%f in ('dir /a:-d /b "%~2\efi\microsoft\boot" ^| findstr /v "bcd efisys.bin"') do del /q "%~2\efi\microsoft\boot\%%f"
@@ -153,7 +151,7 @@ if "%ImageEdition%" equ "Cloud" ( goto :eof )
 if "%ImageEdition%" equ "CoreCountrySpecific" ( set "ImageName=%ImageName% 家庭中文版" )
 if "%ImageEdition%" equ "CoreSingleLanguage" ( goto :eof )
 if "%ImageEdition%" equ "Core" ( goto :eof )
-if "%ImageEdition%" equ "Education" ( set "ImageName=%ImageName% 教育版" )
+if "%ImageEdition%" equ "Education" ( goto :eof )
 if "%ImageEdition%" equ "Professional" ( set "ImageName=%ImageName% 专业版" )
 if "%ImageEdition%" equ "Enterprise" ( set "ImageName=%ImageName% 企业版" )
 if "%ImageEdition%" equ "EnterpriseS" ( set "ImageName=%ImageName% 企业版 2016 长期服务版" )
@@ -184,4 +182,4 @@ if exist "%~1" rd /q /s "%~1"
 goto :eof
 
 :Exit
-rem shutdown -s -t 0
+shutdown -s -t 0
