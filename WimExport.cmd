@@ -49,7 +49,7 @@ set "WimPath=%~dp0install_RS3_%~3_%date:~0,4%%date:~5,2%%date:~8,2%.wim"
 call :RemoveFile "%WimPath%"
 call :RemoveFolder "%~2"
 rem 导出安装镜像
-for %%i in (china consumer) do (
+for %%i in (china consumer business) do (
     for %%j in ("%~1\*.rs3_release_*%%i*_%~3fre_*.esd") do (
         if not exist "%~2" call :ExportDVD "%%j", "%~2"
         call :ExportImage "%%j", "%WimPath%"
@@ -65,7 +65,7 @@ set "WimPath=%~dp0install_RS5_%~3_%date:~0,4%%date:~5,2%%date:~8,2%.wim"
 call :RemoveFile "%WimPath%"
 call :RemoveFolder "%~2"
 rem 导出安装镜像
-for %%i in (china consumer) do (
+for %%i in (china consumer business) do (
     for %%j in ("%~1\*.rs5_release_*%%i*_%~3fre_*.esd") do (
         if not exist "%~2" call :ExportDVD "%%j", "%~2"
         call :ExportImage "%%j", "%WimPath%"
@@ -104,6 +104,7 @@ rem 获取版本信息
 for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:3 ^| findstr /i Version') do ( set "ImageVersion=%%f" )
 for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:3 ^| findstr /i Architecture') do ( set "ImageArch=%%f" )
 set "NetFx3Path=%~dp0Pack\NetFx3\%ImageVersion%.%ImageArch%"
+if not exist "%NetFx3Path%" xcopy /I /H /R /Y "%~2\sources\sxs" "%NetFx3Path%" >nul
 rem 清理无用文件
 del /q "%~2\setup.exe"
 del /q "%~2\autorun.inf"
@@ -182,4 +183,4 @@ if exist "%~1" rd /q /s "%~1"
 goto :eof
 
 :Exit
-shutdown -s -t 0
+rem shutdown -s -t 0
