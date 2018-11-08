@@ -220,7 +220,7 @@ if "%ImageShortVersion%" equ "10.0" (
         Reg delete "HKLM\TK_SOFTWARE\Classes\SystemFileAssociations\%%t\Shell\3D Edit" /f >nul 2>&1
     )
     rem 延迟功能更新
-    if "%ImageVersion%" leq "10.0.15063" Reg add "HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferFeatureUpdatesPeriodInDays" /t REG_DWORD /d "365" /f >nul
+    if "%ImageVersion%" leq "10.0.17134" Reg add "HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferFeatureUpdatesPeriodInDays" /t REG_DWORD /d "365" /f >nul
     rem 右键菜单优化
     call :ImportRegistry "%~dp0Pack\Optimize\Context.reg"
     call :ImportStartLayout "%~1", "%~dp0Pack\StartLayout.xml"
@@ -263,11 +263,14 @@ xcopy /E /I /H /R /Y /J "%~dp0Pack\Scripts\*.*" "%~1\Windows\Setup\Scripts" >nul
 setlocal
 if /i "%~2" equ "Admin" (
     if exist "%~dp0Pack\AAct_%ImageArch%.exe" copy "%~dp0Pack\AAct_%ImageArch%.exe" "%~1\Windows\Setup\Scripts\AAct.exe" >nul
-    
     set "UnattendFile=%~dp0Pack\Unattend.Admin.xml"
+
+if "%ImageShortVersion%" leq "10.0" (
     call :MountImageRegistry "%~1"
     Reg add "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "FilterAdministratorToken" /t REG_DWORD /d 1 /f >nul
     call :UnMountImageRegistry
+)
+    
 ) else if /i "%~2" equ "OEM" (
     set "UnattendFile=%~dp0Pack\Unattend.OEM.xml"
     copy "%~dp0Pack\oemlogo.bmp" "%~1\Windows\System32\oemlogo.bmp"
