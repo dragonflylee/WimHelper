@@ -104,7 +104,7 @@ rem 获取版本信息
 for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:3 ^| findstr /i Version') do ( set "ImageVersion=%%f" )
 for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:3 ^| findstr /i Architecture') do ( set "ImageArch=%%f" )
 set "NetFx3Path=%~dp0Pack\NetFx3\%ImageVersion%.%ImageArch%"
-if not exist "%NetFx3Path%" xcopy /I /H /R /Y "%~2\sources\sxs" "%NetFx3Path%" >nul
+rem if not exist "%NetFx3Path%" xcopy /I /H /R /Y "%~2\sources\sxs" "%NetFx3Path%" >nul
 rem 清理无用文件
 del /q "%~2\setup.exe"
 del /q "%~2\autorun.inf"
