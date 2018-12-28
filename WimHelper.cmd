@@ -352,6 +352,7 @@ for /f "delims=" %%f in ('type "%~1"') do (
     set "str=!str:HKEY_CURRENT_USER=HKEY_LOCAL_MACHINE\TK_NTUSER!"
     set "str=!str:HKEY_LOCAL_MACHINE\SOFTWARE=HKEY_LOCAL_MACHINE\TK_SOFTWARE!"
     set "str=!str:HKEY_LOCAL_MACHINE\SYSTEM=HKEY_LOCAL_MACHINE\TK_SYSTEM!"
+    set "str=!str:CurrentControlSet=ControlSet001!"
     echo !str!>>"%TMP%\%~nx1"
 )
 %NSudo% reg import "%TMP%\%~nx1" >nul 2>&1

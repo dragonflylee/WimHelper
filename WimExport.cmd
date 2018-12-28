@@ -9,6 +9,7 @@ set "Dism=Dism.exe /NoRestart /LogLevel:1"
 set "ESDPath=%~1"
 
 if "%ESDPath%" equ "" call :SelectFolder
+if "%ESDPath%" equ "" goto :Exit
 rem call :ExportISO "E G", "%~dp0install.wim"
 for %%i in (X64) do call :ExportRS5 "%ESDPath%", "%~dp0DVD_%%i", "%%i"
 goto :Exit
@@ -16,7 +17,6 @@ goto :Exit
 :SelectFolder
 set folder=mshta "javascript:var folder=new ActiveXObject('Shell.Application').BrowseForFolder(0,'选择ESD镜像所在目录', 513, '');if(folder) new ActiveXObject('Scripting.FileSystemObject').GetStandardStream(1).Write(folder.Self.Path);window.close();"
 for /f %%f in ('%folder%') do set "ESDPath=%%f"
-if "%ESDPath%" equ "" goto :Exit
 goto :eof
 
 rem 导出ISO镜像 [ %~1 : 盘符列表[空格分隔], %~2 : 目标路径 ]
