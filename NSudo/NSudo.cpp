@@ -136,7 +136,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hInstance);
     UNREFERENCED_PARAMETER(hPrevInstance);
 
-    if (_tcsclen(lpCmdLine) == 0) return MessageBox(HWND_DESKTOP, TEXT("Thanks M2Team"), TEXT("NSudo"), MB_ICONASTERISK);
+    if (!(*lpCmdLine)) return MessageBox(HWND_DESKTOP, TEXT("Thanks M2Team"), TEXT("NSudo"), MB_ICONASTERISK);
 
     HRESULT hr = S_OK;
     HANDLE hToken = NULL, hTokenWinLogon = NULL, hTokenTrusted = NULL;

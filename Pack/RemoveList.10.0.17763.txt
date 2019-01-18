@@ -12,9 +12,6 @@ Microsoft-Windows-Holographic-Desktop-Merged-WOW64-Package
 Microsoft-Windows-Non-LTSB-RegulatedPackages-Package
 ;Edgeä¯ÀÀÆ÷
 Microsoft-Windows-Internet-Browser-Package
-;Cortana
-;Microsoft-Windows-Cortana-Package
-;Microsoft-Windows-Cortana-PAL-Desktop-Package
 OpenSSH-Client-Package
 
 ;Hyper
@@ -30,3 +27,9 @@ HyperV-VID-Package
 Microsoft-Windows-HyperV-HypervisorPlatform-Package
 Microsoft-Windows-HyperV-OptionalFeature-HypervisorPlatform-Package
 Microsoft-Windows-OneCore-Containers-Opt-Package
+HyperV-Feature-VirtualMachinePlatform-Package
+Microsoft-OneCore-VirtualizationBasedSecurity-Package
+HyperV-Networking-Package
+HyperV-HvSocket-Package
+Microsoft-Windows-HyperV-OptionalFeature-HypervisorPlatform-Disabled-Package
+Microsoft-Windows-HyperV-OptionalFeature-VirtualMachinePlatform-Disabled-Package
