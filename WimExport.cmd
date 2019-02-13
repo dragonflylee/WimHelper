@@ -106,7 +106,6 @@ for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Inde
 set "NetFx3Path=%~dp0Pack\NetFx3\%ImageVersion%.%ImageArch%"
 rem if not exist "%NetFx3Path%" xcopy /I /H /R /Y "%~2\sources\sxs" "%NetFx3Path%" >nul
 rem 清理无用文件
-del /q "%~2\setup.exe"
 del /q "%~2\autorun.inf"
 rd /s /q "%~2\support"
 rd /s /q "%~2\boot\zh-cn"

@@ -75,8 +75,8 @@ call :RemoveAppx "%~1"
 for /f %%f in ('type "%~dp0Pack\CapabilityList.%ImageShortVersion%.txt" 2^>nul') do call :RemoveCapability "%~1", "%%f"
 for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%~1", "%%f"
 call :IntRollupFix "%~1"
-rem call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs.14"
-call :AddAppx "%~1", "Store", "VCLibs.14 Runtime.1.7 Framework.1.7 VP9"
+call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs.14"
+call :AddAppx "%~1", "Store", "VCLibs.14 Runtime.1.7 Framework.1.7"
 call :AddAppx "%~1", "WindowsCalculator"
 call :AddAppx "%~1", "XboxGamingOverlay"
 call :ImportOptimize "%~1"
@@ -309,7 +309,7 @@ goto :eof
 
 rem 移除自带应用 [ %~1 : 镜像挂载路径 ]
 :RemoveAppx
-for /f "tokens=3" %%f in ('%Dism% /English /Image:"%~1" /Get-ProvisionedAppxPackages ^| findstr PackageName ^| findstr -V DesktopAppInstaller') do (
+for /f "tokens=3" %%f in ('%Dism% /English /Image:"%~1" /Get-ProvisionedAppxPackages ^| findstr PackageName') do (
     echo.移除应用 [%%f]
     %Dism% /Image:"%~1" /Remove-ProvisionedAppxPackage /PackageName:"%%f" /Quiet
 )
