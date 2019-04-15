@@ -82,7 +82,7 @@ rem 转换ESD镜像
 rem 生成ISO镜像
 for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:1 ^| findstr /i Architecture') do ( set "ImageArch=%%f" )
 for /f "tokens=3 delims=." %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:1 ^| findstr /i Version') do ( set "ImageRevision=%%f" )
-for /f "tokens=4" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:1 ^| find "ServicePack Level"') do ( set "ImageBuild=%%f" )
+for /f "tokens=4" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" /Index:1 ^| find "ServicePack Build"') do ( set "ImageBuild=%%f" )
 for /f "tokens=* delims=" %%f in ('Dism.exe /English /Get-ImageInfo /ImageFile:"%~1" /Index:1 ^| findstr /i Default') do ( set "ImageLanguage=%%f" )
 call "%~dp0MakeISO.cmd" "%~2" "Win10_%ImageRevision%.%ImageBuild%_%ImageArch%_%ImageLanguage:~1,-10%"
 rem 生成二合一镜像

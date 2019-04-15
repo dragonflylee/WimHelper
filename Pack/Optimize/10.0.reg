@@ -186,6 +186,12 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\MINIE]
 "ShowTabsBelowAddressBar"=dword:00000000
 
+;½ûÓÃWindows Search
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Search\Preferences]
+"WholeFileSystem"=dword:00000001
+;[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Service\TimeZoneInformation]
+;"RealTimeIsUniversal"=dword:00000001
+
 ;UTC Ê±¼ä
 ;[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\TimeZoneInformation]
 ;"RealTimeIsUniversal"=dword:00000001
