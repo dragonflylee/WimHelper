@@ -94,7 +94,7 @@ rem 处理OEM镜像 [ %~1 : 镜像文件路径, %~2 : 镜像序号 ]
 call :GetImageInfo "%~1", "%~2"
 title 正在处理 [%~2] 镜像 %ImageName% 版本 %ImageVersion% 语言 %ImageLanguage%
 %Dism% /Mount-Wim /WimFile:"%~1" /Index:%~2 /MountDir:"%MNT%"
-call :AddAppx "%MNT%", "WacomTechnologyCorp", "VCLibs.14 Runtime.1.4 Framework.1.3"
+call :AddAppx "%MNT%", "WacomTechnologyCorp", "UWPDesktop"
 call :ImportUnattend "%MNT%", "OEM"
 if exist "%~dp0Driver" %Dism% /Image:"%MNT%" /Add-Driver /Driver:"%~dp0Driver" /recurse /ForceUnsigned 
 call :ImageClean "%MNT%"
@@ -136,24 +136,30 @@ rem ############################################################################
 rem 集成积累更新 [ %~1 : 镜像挂载路径 ]
 :IntRollupFix
 setlocal
-call :MountImageRegistry "%~1"
-rem Enable DISM Image Cleanup with Full ResetBase...
-Reg add "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\SideBySide\Configuration" /v "DisableResetbase" /t REG_DWORD /d "0" /f >nul
-call :UnMountImageRegistry
 set "UpdatePath=%~dp0Pack\Update\%ImageVersion%.%ImageArch%"
 if exist "%UpdatePath%" (
     %Dism% /Image:"%~1" /Add-Package /ScratchDir:"%TMP%" /PackagePath:"%UpdatePath%"
-rem %Dism% /Image:"%~1" /Cleanup-Image /ScratchDir:"%TMP%" /StartComponentCleanup /ResetBase
 )
-call :IntFeature "%~1", "NetFx3"
 set "RollupPath=%~dp0Pack\RollupFix\%ImageVersion%.%ImageArch%"
 if exist "%RollupPath%" (
     %Dism% /Image:"%~1" /Add-Package /ScratchDir:"%TMP%" /PackagePath:"%RollupPath%"
     call :IntRecovery "%~1", "%RollupPath%"
 )
+if not exist "%~1\Windows\WinSxS\pending.xml" (
+    rem Enable DISM Image Cleanup with Full ResetBase...
+    call :MountImageRegistry "%~1"
+    Reg add "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\SideBySide\Configuration" /v "DisableResetbase" /t REG_DWORD /d "0" /f >nul
+    Reg add "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\SideBySide\Configuration" /v "SupersededActions" /t REG_DWORD /d "1" /f >nul
+    call :UnMountImageRegistry
+    %Dism% /Image:"%~1" /Cleanup-Image /ScratchDir:"%TMP%" /StartComponentCleanup
+) else (
+    %NSudo% cmd.exe /c del /q "%~1\Windows\WinSxS\ManifestCache\*.bin"
+    %NSudo% cmd.exe /c rd /s /q "%~1\Windows\WinSxS\Temp\PendingDeletes"
+    %NSudo% cmd.exe /c rd /s /q "%~1\Windows\WinSxS\Temp\TransformerRollbackData"
+    %NSudo% cmd.exe /c rd /s /q "%~1\Windows\CbsTemp"
+)
+call :IntFeature "%~1", "NetFx3"
 endlocal
-%NSudo% cmd.exe /c rd /s /q "%~1\Windows\WinSxS\Temp\PendingDeletes"
-%NSudo% cmd.exe /c rd /s /q "%~1\Windows\WinSxS\ManifestCache"
 goto :eof
 
 rem 向 WinRe 集成更新 [ %~1 : 镜像挂载路径, %~2 更新包路径 ]
