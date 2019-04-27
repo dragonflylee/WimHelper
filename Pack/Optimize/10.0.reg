@@ -86,6 +86,8 @@ Windows Registry Editor Version 5.00
 ;½ûÓÃ Windows Defender
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender]
 "DisableAntiSpyware"=dword:00000001
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender]
+"DisableAntiSpyware"=dword:00000001
 [HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\SecurityHealthService]
 "Start"=dword:00000004
 

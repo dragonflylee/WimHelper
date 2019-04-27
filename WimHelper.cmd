@@ -208,13 +208,6 @@ call :ImportRegistry "%~dp0Pack\Optimize\%ImageShortVersion%.reg"
 call :ImportRegistry "%~dp0Pack\Optimize\%ImageShortVersion%.%ImageArch%.reg"
 if "%ImageType%" equ "Server" call :ImportRegistry "%~dp0Pack\Optimize\Server.reg"
 if "%ImageShortVersion%" equ "10.0" (
-    rem Applying Anti Microsoft Telemetry Client Patches
-    Reg add "HKLM\TK_SYSTEM\ControlSet001\Services\DiagTrack" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
-    Reg delete "HKLM\TK_SYSTEM\ControlSet001\Control\WMI\AutoLogger\AutoLogger-Diagtrack-Listener" /f >nul 2>&1
-    Reg delete "HKLM\TK_SYSTEM\ControlSet001\Control\WMI\AutoLogger\Diagtrack-Listener" /f >nul 2>&1
-    Reg delete "HKLM\TK_SYSTEM\ControlSet001\Control\WMI\AutoLogger\SQMLogger" /f >nul 2>&1
-    Reg delete "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack" /f >nul 2>&1
-    Reg delete "HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\DataCollection" /f >nul 2>&1
     rem Removing Windows Mixed Reality Menu from Settings App
     Reg add "HKLM\TK_NTUSER\Software\Microsoft\Windows\CurrentVersion\Holographic" /v "FirstRunSucceeded" /t REG_DWORD /d "0" /f >nul
     rem фТсцууф╛╡И©╢фВ, и╬ЁЩ 3D╩╜м╪ ср╪Э

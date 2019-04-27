@@ -69,6 +69,8 @@ Win10 1709|10.0.16299|[32位](http://download.windowsupdate.com/d/msdownload/upd
 
 应用安装器的ID为 9NBLGGH4NNS1
 
+VP9 9N4D0MSMP0PT
+
 
 ## 使用说明
 
