@@ -72,9 +72,9 @@ goto :eof
 rem 处理原版镜像 [ %~1 : 镜像挂载路径 ]
 :MakeWimClean
 call :RemoveAppx "%~1"
-for /f %%f in ('type "%~dp0Pack\CapabilityList.%ImageShortVersion%.txt" 2^>nul') do call :RemoveCapability "%~1", "%%f"
-for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%~1", "%%f"
 call :IntRollupFix "%~1"
+for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do call :RemoveCapability "%~1", "%%f"
+for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%~1", "%%f"
 call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs.14"
 call :AddAppx "%~1", "Store", "VCLibs.14 Runtime.1.7 Framework.1.7"
 call :AddAppx "%~1", "WindowsCalculator"
@@ -94,12 +94,18 @@ rem 处理OEM镜像 [ %~1 : 镜像文件路径, %~2 : 镜像序号 ]
 call :GetImageInfo "%~1", "%~2"
 title 正在处理 [%~2] 镜像 %ImageName% 版本 %ImageVersion% 语言 %ImageLanguage%
 %Dism% /Mount-Wim /WimFile:"%~1" /Index:%~2 /MountDir:"%MNT%"
+call :RemoveAppx "%MNT%"
+for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do call ::RemoveCapability "%MNT%", "%%f"
+for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%MNT%", "%%f"
+call :IntRollupFix "%MNT%"
+call :AddAppx "%MNT%", "DesktopAppInstaller", "VCLibs.14"
+call :AddAppx "%MNT%", "Store", "VCLibs.14 Runtime.1.7 Framework.1.7"
 call :AddAppx "%MNT%", "WacomTechnologyCorp", "UWPDesktop"
+call :ImportOptimize "%MNT%"
 call :ImportUnattend "%MNT%", "OEM"
 if exist "%~dp0Driver" %Dism% /Image:"%MNT%" /Add-Driver /Driver:"%~dp0Driver" /recurse /ForceUnsigned 
 call :ImageClean "%MNT%"
-%Dism% /Commit-Image /MountDir:"%MNT%" /Append
-%Dism% /Unmount-Wim /MountDir:"%MNT%" /Discard
+%Dism% /Unmount-Wim /MountDir:"%MNT%" /Commit
 goto :eof
 
 rem 处理lopatkin镜像 [ %~1 : 镜像挂载路径 ]
@@ -158,7 +164,6 @@ if not exist "%~1\Windows\WinSxS\pending.xml" (
     %NSudo% cmd.exe /c rd /s /q "%~1\Windows\WinSxS\Temp\TransformerRollbackData"
     %NSudo% cmd.exe /c rd /s /q "%~1\Windows\CbsTemp"
 )
-call :IntFeature "%~1", "NetFx3"
 endlocal
 goto :eof
 
@@ -304,6 +309,14 @@ for /f %%i in ('"dir /b %Apps%\*%~2*.appxbundle" 2^>nul') do (
     %Dism% /Image:"%~1" /Add-ProvisionedAppxPackage /PackagePath:"%Apps%\%%i" %LicPath% %Dependency% /Quiet
 )
 endlocal
+goto :eof
+
+rem 禁用功能 [ %~1 : 镜像挂载路径, %~2 : 功能名称 ]
+:RemoveFeature
+for /f "tokens=4" %%f in ('%Dism% /English /Image:"%~1" /Get-Features ^| findstr Feature ^| findstr /i "%~2"') do (
+    echo.移除功能 [%%f]
+    %Dism% /Image:"%~1" /Disable-Feature /FeatureName:"%%f" /Remove
+)
 goto :eof
 
 rem 移除自带应用 [ %~1 : 镜像挂载路径 ]

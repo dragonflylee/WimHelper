@@ -9,7 +9,7 @@
                 <HelpCustomized>true</HelpCustomized>
             </OEMInformation>
             <RegisteredOrganization>Lenovo</RegisteredOrganization>
-            <ComputerName>Yoga730</ComputerName>
+            <ComputerName></ComputerName>
         </component>
     </settings>
     <settings pass="oobeSystem">
