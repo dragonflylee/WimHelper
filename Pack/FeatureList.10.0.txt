@@ -1,5 +1,5 @@
 ;混合现实
-Holographic
+;Holographic
 ;快速助手
 QuickAssist
 ;Windows Media Player 播放器
