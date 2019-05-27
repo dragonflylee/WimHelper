@@ -11,7 +11,7 @@ set "ESDPath=%~1"
 if "%ESDPath%" equ "" call :SelectFolder
 if "%ESDPath%" equ "" goto :Exit
 rem call :ExportISO "E G", "%~dp0install.wim"
-for %%i in (X64) do call :ExportRS5 "%ESDPath%", "%~dp0DVD_%%i", "%%i"
+for %%i in (X64) do call :Export19H1 "%ESDPath%", "%~dp0DVD_%%i", "%%i"
 goto :Exit
 
 :SelectFolder
@@ -42,31 +42,15 @@ if not exist "%WimPath%" goto :eof
 call :MakeISO "%WimPath%", "%~2"
 goto :eof
 
-rem 导出RS3镜像 [ %~1 : 源路径, %~2 : 目标路径, %~3 处理器架构 ]
-:ExportRS3
+rem 导出19H1镜像 [ %~1 : 源路径, %~2 : 目标路径, %~3 处理器架构 ]
+:Export19H1
 if not exist "%~1" echo [%~1] 不存在 && goto :eof
-set "WimPath=%~dp0install_RS3_%~3_%date:~0,4%%date:~5,2%%date:~8,2%.wim"
+set "WimPath=%~dp0install_19H1_%~3_%date:~0,4%%date:~5,2%%date:~8,2%.wim"
 call :RemoveFile "%WimPath%"
 call :RemoveFolder "%~2"
 rem 导出安装镜像
 for %%i in (china consumer business) do (
-    for %%j in ("%~1\*.rs3_release_*%%i*_%~3fre_*.esd") do (
-        if not exist "%~2" call :ExportDVD "%%j", "%~2"
-        call :ExportImage "%%j", "%WimPath%"
-    )
-)
-call :MakeISO "%WimPath%", "%~2"
-goto :eof
-
-rem 导出RS5镜像 [ %~1 : 源路径, %~2 : 目标路径, %~3 处理器架构 ]
-:ExportRS5
-if not exist "%~1" echo [%~1] 不存在 && goto :eof
-set "WimPath=%~dp0install_RS5_%~3_%date:~0,4%%date:~5,2%%date:~8,2%.wim"
-call :RemoveFile "%WimPath%"
-call :RemoveFolder "%~2"
-rem 导出安装镜像
-for %%i in (china consumer business) do (
-    for %%j in ("%~1\*.rs5_release_*%%i*_%~3fre_*.esd") do (
+    for %%j in ("%~1\*.19h1_release_*%%i*_%~3fre_*.esd") do (
         if not exist "%~2" call :ExportDVD "%%j", "%~2"
         call :ExportImage "%%j", "%WimPath%"
     )

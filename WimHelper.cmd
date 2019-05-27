@@ -112,10 +112,13 @@ rem 处理lopatkin镜像 [ %~1 : 镜像挂载路径 ]
 :lopatkin
 rem 修复默认用户头像
 xcopy /E /I /H /R /Y /J "%SRC%\ProgramData\Microsoft\User Account Pictures\*.*" "%~1\ProgramData\Microsoft\User Account Pictures" >nul
+
 call :MountImageRegistry "%~1"
 rem 修复默认主题
 call :RemoveFolder "%~1\Windows\Web\Wallpaper\Theme1"
 call :RemoveFile "%~1\Windows\Resources\Themes\Theme1.theme"
+move "%~1\ProgramData\Microsoft\Windows\Start Menu\Programs\Accessories\Калькулятор.lnk" "%~1\ProgramData\Microsoft\Windows\Start Menu\Programs\Accessories\Calculator.lnk"
+notepad "%~1\ProgramData\Microsoft\Windows\Start Menu\Programs\Accessories\desktop.ini"
 reg add "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\LastTheme" /v "ThemeFile" /t REG_EXPAND_SZ /d "%%SystemRoot%%\Resources\Themes\Aero.theme" /f >nul
 rem 修复设备管理器英文
 for /f "tokens=2 delims=@," %%j in ('reg query "HKLM\TK_SYSTEM\ControlSet001\Control\Class" /v "ClassDesc" /s ^| findstr /i inf') do (
@@ -124,6 +127,7 @@ for /f "tokens=2 delims=@," %%j in ('reg query "HKLM\TK_SYSTEM\ControlSet001\Con
     )
 )
 call :UnMountImageRegistry
+rem call :AddAppx "%~1", "Store", "VCLibs.14 Runtime.1.7 Framework.1.7"
 call :RemoveFolder "%~1\Program Files (x86)\Trey"
 call :RemoveFolder "%~1\Program Files\Trey"
 call :RemoveFile "%~1\Users\Default\Desktop\Green Christmas Tree.lnk"
