@@ -72,9 +72,9 @@ goto :eof
 rem 处理原版镜像 [ %~1 : 镜像挂载路径 ]
 :MakeWimClean
 call :RemoveAppx "%~1"
-call :IntRollupFix "%~1"
 for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do call :RemoveCapability "%~1", "%%f"
 for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%~1", "%%f"
+call :IntRollupFix "%~1"
 call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs.14"
 call :AddAppx "%~1", "Store", "VCLibs.14 Runtime.1.7 Framework.1.7"
 call :AddAppx "%~1", "WindowsCalculator"
@@ -158,7 +158,7 @@ if exist "%RollupPath%" (
 if not exist "%~1\Windows\WinSxS\pending.xml" (
     rem Enable DISM Image Cleanup with Full ResetBase...
     call :MountImageRegistry "%~1"
-    Reg add "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\SideBySide\Configuration" /v "DisableResetbase" /t REG_DWORD /d "0" /f >nul
+    Reg add "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\SideBySide\Configuration" /v "DisableComponentBackups" /t REG_DWORD /d "1" /f >nul
     Reg add "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\SideBySide\Configuration" /v "SupersededActions" /t REG_DWORD /d "1" /f >nul
     call :UnMountImageRegistry
     %Dism% /Image:"%~1" /Cleanup-Image /ScratchDir:"%TMP%" /StartComponentCleanup
@@ -182,7 +182,7 @@ if not exist "%WinrePath%" (
     %Dism% /Mount-Wim /WimFile:"%~1\Windows\System32\Recovery\Winre.wim" /Index:1 /MountDir:"%TMP%\RE" /Quiet
     call :MountImageRegistry "%TMP%\RE"
     rem Enable DISM Image Cleanup with Full ResetBase...
-    Reg add "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\SideBySide\Configuration" /v "DisableResetbase" /t REG_DWORD /d "0" /f >nul
+    Reg add "HKLM\TK_SOFTWARE\Microsoft\Windows\CurrentVersion\SideBySide\Configuration" /v "DisableComponentBackups" /t REG_DWORD /d "1" /f >nul
     call :UnMountImageRegistry
     echo.集成更新 [%WinrePath%]
     %Dism% /Image:"%TMP%\RE" /Add-Package /ScratchDir:"%TMP%" /PackagePath:"%~2" /Quiet
