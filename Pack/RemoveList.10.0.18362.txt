@@ -3,9 +3,6 @@ Microsoft-Windows-Not-Supported-On-LTSB-Package
 Microsoft-Windows-Not-Supported-On-LTSB-WOW64-Package
 ;快速助手
 Microsoft-Windows-QuickAssist-Package
-;离线文件
-Microsoft-Windows-OfflineFiles-Package
-Microsoft-Windows-OfflineFiles-WOW64-Package
 ;连接
 Microsoft-Windows-Non-LTSB-RegulatedPackages-Package
 ;Edge浏览器
