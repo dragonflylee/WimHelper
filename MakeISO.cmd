@@ -25,11 +25,11 @@ if exist "%DVD%\sources" (
 )>"%DVD%\sources\ei.cfg"
 rem ÅÐ¶ÏUEFIÒýµ¼
 if exist "%UEFIBoot%" (
-   "%Oscdimg%" -bootdata:2#p0,e,b"%BIOSBoot%"#pEF,e,b"%UEFIBoot%" -o -h -m -u2 -udfver102 -l"%ISOLabel%" "%DVD%" "%ISOFileName%"
+   "%Oscdimg%" -bootdata:2#p0,e,b"%BIOSBoot%"#pEF,e,b"%UEFIBoot%" -o -h -m -u2 -l"%ISOLabel%" "%DVD%" "%ISOFileName%"
 ) else if exist "%BIOSBoot%" (
-   "%Oscdimg%" -bootdata:1#p0,e,b"%BIOSBoot%" -o -h -m -u2 -udfver102 -l"%ISOLabel%" "%DVD%" "%ISOFileName%"
+   "%Oscdimg%" -bootdata:1#p0,e,b"%BIOSBoot%" -o -h -m -u2 -l"%ISOLabel%" "%DVD%" "%ISOFileName%"
 ) else (
-   "%Oscdimg%" -o -h -m -u2 -udfver102 -l"%ISOLabel%" "%DVD%" "%ISOFileName%"
+   "%Oscdimg%" -o -h -m -u2 -l"%ISOLabel%" "%DVD%" "%ISOFileName%"
 )
 goto :Exit
 
