@@ -3,8 +3,6 @@ Microsoft-Windows-Not-Supported-On-LTSB-Package
 Microsoft-Windows-Not-Supported-On-LTSB-WOW64-Package
 ;快速助手
 Microsoft-Windows-QuickAssist-Package
-;连接
-Microsoft-Windows-Non-LTSB-RegulatedPackages-Package
 ;Edge浏览器
 ;Microsoft-Windows-Internet-Browser-Package
 OpenSSH-Client-Package
