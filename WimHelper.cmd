@@ -61,11 +61,6 @@ call :GetImageInfo "%~1", "%~2"
 title 正在处理 [%~2] 镜像 %ImageName% 版本 %ImageVersion% 语言 %ImageLanguage%
 %Dism% /Mount-Wim /WimFile:"%~1" /Index:%~2 /MountDir:"%MNT%"
 call :MakeWimClean "%MNT%"
-rem 处理Admin分卷
-for /f "tokens=3" %%f in ('%Dism% /English /Get-ImageInfo /ImageFile:"%~1" ^| findstr /i Index') do ( set "Index=%%f" )
-if "%Index%" leq "%ImageCount%" goto :eof
-%Dism% /Export-Image /SourceImageFile:"%~1" /SourceIndex:%~2 /DestinationImageFile:"%TMP%\%~nx1"
-%Dism% /Export-Image /SourceImageFile:"%~1" /SourceIndex:%Index% /DestinationImageFile:"%TMP%\%~nx1" /DestinationName:"%ImageName% [Admin]"
 goto :eof
 
 
@@ -75,18 +70,13 @@ call :RemoveAppx "%~1"
 for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do call :RemoveCapability "%~1", "%%f"
 for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%~1", "%%f"
 call :IntRollupFix "%~1"
-call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs.14"
-call :AddAppx "%~1", "Store", "VCLibs.14 Runtime.1.7 Framework.1.7"
+call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs"
+call :AddAppx "%~1", "Store", "VCLibs Runtime Framework"
 call :AddAppx "%~1", "WindowsCalculator"
 call :AddAppx "%~1", "XboxGamingOverlay"
 call :ImportOptimize "%~1"
 call :ImportUnattend "%~1"
-call :ImageClean "%~1"
-%Dism% /Commit-Image /MountDir:"%~1"
-call :ImportUnattend "%~1", "Admin"
-call :ImageClean "%~1"
-%Dism% /Commit-Image /MountDir:"%~1" /Append
-%Dism% /Unmount-Wim /MountDir:"%~1" /Discard
+%Dism% /Unmount-Wim /MountDir:"%~1" /Commit
 goto :eof
 
 rem 处理OEM镜像 [ %~1 : 镜像文件路径, %~2 : 镜像序号 ]
@@ -98,8 +88,8 @@ call :RemoveAppx "%MNT%"
 for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do call ::RemoveCapability "%MNT%", "%%f"
 for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%MNT%", "%%f"
 call :IntRollupFix "%MNT%"
-call :AddAppx "%MNT%", "DesktopAppInstaller", "VCLibs.14"
-call :AddAppx "%MNT%", "Store", "VCLibs.14 Runtime.1.7 Framework.1.7"
+call :AddAppx "%MNT%", "DesktopAppInstaller", "VCLibs"
+call :AddAppx "%MNT%", "Store", "VCLibs Runtime Framework"
 call :AddAppx "%MNT%", "WacomTechnologyCorp", "UWPDesktop"
 call :ImportOptimize "%MNT%"
 call :ImportUnattend "%MNT%", "OEM"
