@@ -1,0 +1,5 @@
+;¿ìËÙÖúÊÖ
+Microsoft-Windows-QuickAssist-Package
+;Edgeä¯ÀÀÆ÷
+;Microsoft-Windows-Internet-Browser-Package
+OpenSSH-Client-Package

@@ -117,7 +117,11 @@ for /f "tokens=2 delims=@," %%j in ('reg query "HKLM\TK_SYSTEM\ControlSet001\Con
     )
 )
 call :UnMountImageRegistry
-rem call :AddAppx "%~1", "Store", "VCLibs.14 Runtime.1.7 Framework.1.7"
+if "%ImageShortVersion%" equ "10.0" (
+    call :RemoveAppx "%~1"
+    call :AddAppx "%MNT%", "DesktopAppInstaller", "VCLibs"
+    call :AddAppx "%MNT%", "Store", "Runtime Framework"
+)
 call :RemoveFolder "%~1\Program Files (x86)\Trey"
 call :RemoveFolder "%~1\Program Files\Trey"
 call :RemoveFile "%~1\Users\Default\Desktop\Green Christmas Tree.lnk"
@@ -319,6 +323,7 @@ for /f "tokens=3" %%f in ('%Dism% /English /Image:"%~1" /Get-ProvisionedAppxPack
     echo.移除应用 [%%f]
     %Dism% /Image:"%~1" /Remove-ProvisionedAppxPackage /PackageName:"%%f" /Quiet
 )
+for /f %%f in ('dir /a:d /b "%CD%\Mount\Program Files\WindowsApps"') do call :RemoveFolder "%CD%\Mount\Program Files\WindowsApps\%%f"
 goto :eof
 
 rem 移除系统功能 [ %~1 : 镜像挂载路径, %~2 : 功能名称 ]

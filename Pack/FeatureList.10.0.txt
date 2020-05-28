@@ -6,3 +6,7 @@ QuickAssist
 WindowsMediaPlayer
 ;SSH¿Í»§¶Ë
 OpenSSH.Client
+
+MSPaint
+Notepad
+WordPad
