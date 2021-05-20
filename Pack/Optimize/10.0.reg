@@ -139,7 +139,7 @@ Windows Registry Editor Version 5.00
 "RunOnceHasShown"=dword:00000001
 "RunOnceComplete"=dword:00000001
 "DisableFirstRunCustomize"=dword:00000001
-"Isolation"="PMIL"
+;"Isolation"="PMIL"
 [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\LinksBar]
 "Enabled"=dword:00000000
 [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Toolbar]
@@ -196,8 +196,6 @@ Windows Registry Editor Version 5.00
 ;禁用Windows Search
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Search\Preferences]
 "WholeFileSystem"=dword:00000001
-;[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Service\TimeZoneInformation]
-;"RealTimeIsUniversal"=dword:00000001
 
 ;UTC 时间
 ;[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\TimeZoneInformation]
@@ -213,6 +211,6 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}]
 "System.IsPinnedToNameSpaceTree"=dword:00000000
 
+;禁用游戏栏
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR]
 "AppCaptureEnabled"=dword:00000000
-

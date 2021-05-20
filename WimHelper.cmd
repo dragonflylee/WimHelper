@@ -71,7 +71,7 @@ for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do
 for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%~1", "%%f"
 call :IntRollupFix "%~1"
 call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs"
-call :AddAppx "%~1", "Store", "VCLibs Runtime Framework"
+call :AddAppx "%~1", "Store", "UI.Xaml Runtime Framework"
 call :AddAppx "%~1", "WindowsCalculator"
 call :AddAppx "%~1", "XboxGamingOverlay"
 call :ImportOptimize "%~1"
