@@ -69,13 +69,12 @@ rem 处理原版镜像 [ %~1 : 镜像挂载路径 ]
 call :RemoveAppx "%~1"
 for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do call :RemoveCapability "%~1", "%%f"
 for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%~1", "%%f"
-call :IntRollupFix "%~1"
-call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs"
-call :AddAppx "%~1", "Store", "UI.Xaml Runtime Framework"
-call :AddAppx "%~1", "WindowsCalculator"
-call :AddAppx "%~1", "XboxGamingOverlay"
+rem call :IntRollupFix "%~1"
+rem call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs"
+call :AddAppx "%~1", "WindowsStore", "VCLibs UI.Xaml Runtime Framework"
 call :ImportOptimize "%~1"
 call :ImportUnattend "%~1"
+call :ImageClean "%MNT%"
 %Dism% /Unmount-Wim /MountDir:"%~1" /Commit
 goto :eof
 
@@ -88,8 +87,8 @@ call :RemoveAppx "%MNT%"
 for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do call ::RemoveCapability "%MNT%", "%%f"
 for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%MNT%", "%%f"
 call :IntRollupFix "%MNT%"
-call :AddAppx "%MNT%", "DesktopAppInstaller", "VCLibs"
-call :AddAppx "%MNT%", "Store", "VCLibs Runtime Framework"
+call :AddAppx "%MNT%", "WindowsStore", "VCLibs Runtime Framework UI.Xaml"
+call :AddAppx "%MNT%", "DesktopAppInstaller", ""
 call :AddAppx "%MNT%", "WacomTechnologyCorp", "UWPDesktop"
 call :ImportOptimize "%MNT%"
 call :ImportUnattend "%MNT%", "OEM"
@@ -225,7 +224,11 @@ if "%ImageShortVersion%" equ "10.0" (
     if "%ImageVersion%" leq "10.0.17134" Reg add "HKLM\TK_SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferFeatureUpdatesPeriodInDays" /t REG_DWORD /d "365" /f >nul
     rem 右键菜单优化
     call :ImportRegistry "%~dp0Pack\Optimize\Context.reg"
-    call :ImportStartLayout "%~1", "%~dp0Pack\StartLayout.xml"
+    if "%ImageVersion%" lss "10.0.22000" (
+       call :ImportStartLayout "%~1", "LayoutModification.xml"
+    ) else (
+       call :ImportStartLayout "%~1", "LayoutModification.json"
+    )
 )
 call :UnMountImageRegistry
 goto :eof
@@ -290,7 +293,7 @@ goto :eof
 
 rem 导入开始菜单布局文件 [ %~1 : 镜像挂载路径, %~2 布局文件路径 ]
 :ImportStartLayout
-copy /y "%~2" "%~1\Users\Default\AppData\Local\Microsoft\Windows\Shell\LayoutModification.xml" >nul
+copy /y "%~dp0Pack\%~2" "%~1\Users\Default\AppData\Local\Microsoft\Windows\Shell\%~2" >nul
 call :RemoveFile "%~1\Users\Default\AppData\Local\TileDataLayer"
 goto :eof
 
@@ -302,7 +305,7 @@ set LicPath=/SkipLicense
 if "%ImageArch%" equ "x86" ( set "AppxArch=*x86*" ) else ( set "AppxArch=*" )
 for /f %%f in ('"dir /b %Apps%\*%~2*.xml" 2^>nul') do ( set LicPath=/LicensePath:"%Apps%\%%f" )
 for %%j in (%~3) do for /f %%i in ('"dir /b %Apps%\*%%j%AppxArch%.appx" 2^>nul') do ( set Dependency=!Dependency! /DependencyPackagePath:"%Apps%\%%i" )
-for /f %%i in ('"dir /b %Apps%\*%~2*.appxbundle" 2^>nul') do (
+for /f %%i in ('"dir /b %Apps%\*%~2*.*xbundle" 2^>nul') do (
     echo.集成应用 [%%~ni]
     %Dism% /Image:"%~1" /Add-ProvisionedAppxPackage /PackagePath:"%Apps%\%%i" %LicPath% %Dependency% /Quiet
 )
@@ -319,11 +322,10 @@ goto :eof
 
 rem 移除自带应用 [ %~1 : 镜像挂载路径 ]
 :RemoveAppx
-for /f "tokens=3" %%f in ('%Dism% /English /Image:"%~1" /Get-ProvisionedAppxPackages ^| findstr PackageName') do (
+for /f "tokens=3" %%f in ('%Dism% /English /Image:"%~1" /Get-ProvisionedAppxPackages ^| findstr PackageName ^| findstr /V SecHealthUI') do (
     echo.移除应用 [%%f]
     %Dism% /Image:"%~1" /Remove-ProvisionedAppxPackage /PackageName:"%%f" /Quiet
 )
-for /f %%f in ('dir /a:d /b "%CD%\Mount\Program Files\WindowsApps"') do call :RemoveFolder "%CD%\Mount\Program Files\WindowsApps\%%f"
 goto :eof
 
 rem 移除系统功能 [ %~1 : 镜像挂载路径, %~2 : 功能名称 ]

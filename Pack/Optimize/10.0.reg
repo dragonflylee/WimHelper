@@ -50,28 +50,11 @@ Windows Registry Editor Version 5.00
 "Start_NotifyNewApps"=dword:00000000
 ;"Start_TrackProgs"=dword:00000000
 ;不显示任务视图按钮
-"ShowTaskViewButton"=dword:00000000
+;"ShowTaskViewButton"=dword:00000000
 ;禁用资源管理器通知
 "ShowSyncProviderNotifications"=dword:00000000
 ;开始按钮右键命令提示符
 "DontUsePowerShellOnWinX"=dword:00000001
-
-;隐藏任务栏人脉
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People]
-"PeopleBand"=dword:00000000
-
-;禁用小娜
-[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search]
-"AllowCortana"=dword:00000000
-"DisableWebSearch"=dword:00000001
-"ConnectedSearchUseWeb"=dword:00000000
-"ConnectedSearchUseWebOverMeteredConnections"=dword:00000000
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search]
-"AllowCortana"=dword:00000000
-"BingSearchEnabled"=dword:00000000
-"CortanaEnabled"=dword:00000000
-;任务栏："搜索框"变为"搜索图标"
-"SearchboxTaskbarMode"=dword:00000001
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
 ;关闭应用商店中查找应用
@@ -84,12 +67,13 @@ Windows Registry Editor Version 5.00
 "GroupPrivacyAcceptance"=dword:00000001
 
 ;禁用 Windows Defender
-[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender]
-"DisableAntiSpyware"=dword:00000001
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender]
 "DisableAntiSpyware"=dword:00000001
-[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\SecurityHealthService]
-"Start"=dword:00000004
+;[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\SecurityHealthService]
+;"Start"=dword:00000004
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]
+"SecurityHealth"=-
+"WindowsDefender"=-
 
 ;禁用 家庭组
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\HomeGroup]
@@ -176,11 +160,11 @@ Windows Registry Editor Version 5.00
 "FilteringMode"=dword:00000000
 [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Safety\PrivacIE\Lists\{77C8DF8B-9502-4FE8-837C-00077879A1C8}]
 "Name"="EasyList China+EasyList"
-"Url"="http://easylist-msie.adblockplus.org/easylistchina+easylist.tpl"
+"Url"="https://easylist-msie.adblockplus.org/easylistchina+easylist.tpl"
 "Enabled"=dword:00000001
 [HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Safety\PrivacIE\Lists\{EA4CFFF6-9FDE-45F3-8129-739D045B5ECD}]
 "Name"="Fanboy Adblock List"
-"Url"="http://www.fanboy.co.nz/adblock/ie/fanboy-noele.tpl"
+"Url"="https://www.fanboy.co.nz/adblock/ie/fanboy-noele.tpl"
 "Enabled"=dword:00000001
 ;隐藏IE右上角的笑脸
 [HKEY_CURRENT_USER\Software\Policies\Microsoft\Internet Explorer\Restrictions]
@@ -204,8 +188,6 @@ Windows Registry Editor Version 5.00
 ;取消OneDrive安装
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run]
 "OneDriveSetup"=-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]
-"SecurityHealth"=-
 
 ;隐藏OneDrive边栏
 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}]

@@ -1,5 +1,6 @@
 Pack/AAct*.exe
 Pack/Appx/*.AppxBundle
+Pack/Appx/*.MsixBundle
 Pack/Appx/*.Appx
 *.wim
 *.esd
