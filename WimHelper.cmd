@@ -72,6 +72,7 @@ for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call 
 rem call :IntRollupFix "%~1"
 rem call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs"
 call :AddAppx "%~1", "WindowsStore", "VCLibs UI.Xaml Runtime Framework"
+call :AddAppx "%MNT%", "DesktopAppInstaller", ""
 call :ImportOptimize "%~1"
 call :ImportUnattend "%~1"
 call :ImageClean "%MNT%"

@@ -50,11 +50,30 @@ Windows Registry Editor Version 5.00
 "Start_NotifyNewApps"=dword:00000000
 ;"Start_TrackProgs"=dword:00000000
 ;不显示任务视图按钮
-;"ShowTaskViewButton"=dword:00000000
+"ShowTaskViewButton"=dword:00000000
 ;禁用资源管理器通知
 "ShowSyncProviderNotifications"=dword:00000000
 ;开始按钮右键命令提示符
 "DontUsePowerShellOnWinX"=dword:00000001
+
+;隐藏任务栏人脉
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People]
+"PeopleBand"=dword:00000000
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Feeds]
+"ShellFeedsTaskbarViewMode"=dword:00000002
+
+;禁用小娜
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search]
+"AllowCortana"=dword:00000000
+"DisableWebSearch"=dword:00000001
+"ConnectedSearchUseWeb"=dword:00000000
+"ConnectedSearchUseWebOverMeteredConnections"=dword:00000000
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search]
+"AllowCortana"=dword:00000000
+"BingSearchEnabled"=dword:00000000
+"CortanaEnabled"=dword:00000000
+;任务栏："搜索框"变为"搜索图标"
+"SearchboxTaskbarMode"=dword:00000001
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
 ;关闭应用商店中查找应用
@@ -67,13 +86,14 @@ Windows Registry Editor Version 5.00
 "GroupPrivacyAcceptance"=dword:00000001
 
 ;禁用 Windows Defender
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender]
+"DisableAntiSpyware"=dword:00000001
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender]
 "DisableAntiSpyware"=dword:00000001
-;[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\SecurityHealthService]
-;"Start"=dword:00000004
+[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\SecurityHealthService]
+"Start"=dword:00000004
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]
 "SecurityHealth"=-
-"WindowsDefender"=-
 
 ;禁用 家庭组
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\HomeGroup]
