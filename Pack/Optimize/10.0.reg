@@ -67,13 +67,14 @@ Windows Registry Editor Version 5.00
 "GroupPrivacyAcceptance"=dword:00000001
 
 ;禁用 Windows Defender
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender]
+"DisableAntiSpyware"=dword:00000001
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender]
 "DisableAntiSpyware"=dword:00000001
 ;[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\SecurityHealthService]
 ;"Start"=dword:00000004
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]
 "SecurityHealth"=-
-"WindowsDefender"=-
 
 ;禁用 家庭组
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\HomeGroup]
