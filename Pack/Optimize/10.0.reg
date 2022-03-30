@@ -1,7 +1,7 @@
 Windows Registry Editor Version 5.00
 
 ;显示桌面系统图标
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel]
 ;个人文件夹
 "{59031a47-3f72-44a7-89c5-5595fe6b30ee}"=dword:00000000 
 ;回收站
@@ -25,20 +25,20 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{31C0DD25-9439-4F12-BF41-7FF4EDA38722}\PropertyBag]
 "ThisPCPolicy"="Hide"
 
-[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer]
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer]
 ;隐藏操作中心任务栏图标
 ;"DisableNotificationCenter"=dword:00000001
 ;隐藏任务栏人脉
 ;"HidePeopleBar"=dword:00000001
 
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer]
 ;去掉快捷方式字样
 "link"=hex:00,00,00,00
 ;快速访问中不显示最近文件和常用文件夹
 ;"ShowRecent"=dword:00000000
 ;"ShowFrequent"=dword:00000000
 
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 ;显示所有文件扩展名
 "HideFileExt"=dword:00000000
 "Hidden"=dword:00000002
@@ -67,12 +67,29 @@ Windows Registry Editor Version 5.00
 "GroupPrivacyAcceptance"=dword:00000001
 
 ;禁用 Windows Defender
-[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender]
-"DisableAntiSpyware"=dword:00000001
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender]
 "DisableAntiSpyware"=dword:00000001
-;[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\SecurityHealthService]
-;"Start"=dword:00000004
+"DisableAntiVirus"=dword:00000001
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender]
+"DisableAntiSpyware"=dword:00000001
+"DisableAntiVirus"=dword:00000001
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\MpEngine]
+"MpEnablePus"=dword:00000000
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection]
+"DisableBehaviorMonitoring"=dword:00000001
+"DisableIOAVProtection"=dword:00000001
+"DisableOnAccessProtection"=dword:00000001
+"DisableRealtimeMonitoring"=dword:00000001
+"DisableRoutinelyTakingAction"=dword:00000001
+"DisableScanOnRealtimeEnable"=dword:00000001
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting]
+"DisableEnhancedNotifications"=dword:00000001
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\SpyNet]
+"DisableBlockAtFirstSeen"=dword:00000001
+"SpynetReporting"=dword:00000000
+"SubmitSamplesConsent"=dword:00000002
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run]
+"SecurityHealth"=-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]
 "SecurityHealth"=-
 
@@ -81,7 +98,7 @@ Windows Registry Editor Version 5.00
 "DisableHomeGroup"=dword:00000001
 
 ;禁止自动维护
-[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance]
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance]
 "MaintenanceDisabled"=dword:00000001
 
 ;屏蔽MRT推送
@@ -92,7 +109,7 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching]
 "SearchOrderConfig"=dword:00000002
 
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager]
 ;禁用预装应用
 "OemPreInstalledAppsEnabled"=dword:00000000
 "PreInstalledAppsEnabled"=dword:00000000
@@ -107,9 +124,9 @@ Windows Registry Editor Version 5.00
 "DisableWindowsConsumerFeatures"=dword:00000001
 
 ;Win10标题栏彩色
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM]
 "ColorPrevalence"=dword:00000001
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize]
 "ColorPrevalence"=dword:00000001
 "SystemUsesLightTheme"=dword:00000000
 
@@ -118,28 +135,28 @@ Windows Registry Editor Version 5.00
 "PreventFirstRunPage"=dword:00000001
 
 ;IE 优化
-[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\Main]
 "Start Page"="about:blank"
 "AlwaysShowMenus"=dword:00000000
 "RunOnceHasShown"=dword:00000001
 "RunOnceComplete"=dword:00000001
 "DisableFirstRunCustomize"=dword:00000001
 ;"Isolation"="PMIL"
-[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\LinksBar]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\LinksBar]
 "Enabled"=dword:00000000
-[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Toolbar]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\Toolbar]
 "Locked"=dword:00000001
-[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Toolbar\WebBrowser]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\Toolbar\WebBrowser]
 "ITBar7Position"=dword:00000001
-[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\TabbedBrowsing]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\TabbedBrowsing]
 "WarnOnClose"=dword:00000000
 "OpenInForeground"=dword:00000001
 "OpenAllHomePages"=dword:00000000
 "PopupsUseNewWindow"=dword:00000002
 "ShortcutBehavior"=dword:00000001
-[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\SearchScopes]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\SearchScopes]
 "DefaultScope"="{4FF09968-687A-4D3C-B68E-C877DE114418}"
-[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\SearchScopes\{4FF09968-687A-4D3C-B68E-C877DE114418}]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\SearchScopes\{4FF09968-687A-4D3C-B68E-C877DE114418}]
 "DisplayName"="百度一下"
 "URL"="http://www.baidu.com/s?wd={searchTerms}&ie=utf-8"
 "ShowSearchSuggestions"=dword:00000001
@@ -147,31 +164,31 @@ Windows Registry Editor Version 5.00
 "SuggestionsURL"=""
 "SuggestionsURL_JSON"="http://suggestion.baidu.com/su?wd={searchTerms}&action=opensearch&ie={inputEncoding}&from=ie8"
 "PreviewURL"=""
-[-HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\SearchScopes\{0633EE93-D776-472f-A0FF-E1416B8B2E3A}]
-[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\SearchScopes\{0633EE93-D776-472f-A0FF-E1416B8B2E3A}]
+[-HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\SearchScopes\{0633EE93-D776-472f-A0FF-E1416B8B2E3A}]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\SearchScopes\{0633EE93-D776-472f-A0FF-E1416B8B2E3A}]
 "Deleted"=dword:00000001
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Activities\地图\bing.com]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Activities\地图\bing.com]
 "Enabled"=dword:00000000
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Activities\电子邮件\live.com]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Activities\电子邮件\live.com]
 "Enabled"=dword:00000000
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Activities\翻译\microsofttranslator.com]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Activities\翻译\microsofttranslator.com]
 "Enabled"=dword:00000000
 ;IE去广告
-[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Safety\PrivacIE]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\Safety\PrivacIE]
 "FilteringMode"=dword:00000000
-[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Safety\PrivacIE\Lists\{77C8DF8B-9502-4FE8-837C-00077879A1C8}]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\Safety\PrivacIE\Lists\{77C8DF8B-9502-4FE8-837C-00077879A1C8}]
 "Name"="EasyList China+EasyList"
 "Url"="https://easylist-msie.adblockplus.org/easylistchina+easylist.tpl"
 "Enabled"=dword:00000001
-[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Safety\PrivacIE\Lists\{EA4CFFF6-9FDE-45F3-8129-739D045B5ECD}]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\Safety\PrivacIE\Lists\{EA4CFFF6-9FDE-45F3-8129-739D045B5ECD}]
 "Name"="Fanboy Adblock List"
 "Url"="https://www.fanboy.co.nz/adblock/ie/fanboy-noele.tpl"
 "Enabled"=dword:00000001
 ;隐藏IE右上角的笑脸
-[HKEY_CURRENT_USER\Software\Policies\Microsoft\Internet Explorer\Restrictions]
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Internet Explorer\Restrictions]
 "NoHelpItemSendFeedback"=dword:00000001
 ;在单独一行上显示选项卡
-[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\MINIE]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\MINIE]
 "ShowTabsBelowAddressBar"=dword:00000000
 
 ; 关闭系统预留空间，即腾出7GB空间
@@ -179,7 +196,7 @@ Windows Registry Editor Version 5.00
 "ShippedWithReserves"=dword:00000000
 
 ;禁用Windows Search
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Search\Preferences]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Search\Preferences]
 "WholeFileSystem"=dword:00000001
 
 ;UTC 时间
@@ -187,7 +204,7 @@ Windows Registry Editor Version 5.00
 ;"RealTimeIsUniversal"=dword:00000001
 
 ;取消OneDrive安装
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]
 "OneDriveSetup"=-
 
 ;隐藏OneDrive边栏
@@ -195,5 +212,5 @@ Windows Registry Editor Version 5.00
 "System.IsPinnedToNameSpaceTree"=dword:00000000
 
 ;禁用游戏栏
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR]
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR]
 "AppCaptureEnabled"=dword:00000000
