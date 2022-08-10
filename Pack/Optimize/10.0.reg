@@ -37,6 +37,8 @@ Windows Registry Editor Version 5.00
 ;快速访问中不显示最近文件和常用文件夹
 ;"ShowRecent"=dword:00000000
 ;"ShowFrequent"=dword:00000000
+;隐藏通知区域图标
+"EnableAutoTray"=dword:00000001
 
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 ;显示所有文件扩展名
@@ -55,6 +57,8 @@ Windows Registry Editor Version 5.00
 "ShowSyncProviderNotifications"=dword:00000000
 ;开始按钮右键命令提示符
 "DontUsePowerShellOnWinX"=dword:00000001
+;始终合并任务栏
+"TaskbarGlomLevel"=dword:00000000
 
 ;隐藏任务栏人脉
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People]
@@ -72,8 +76,8 @@ Windows Registry Editor Version 5.00
 "AllowCortana"=dword:00000000
 "BingSearchEnabled"=dword:00000000
 "CortanaEnabled"=dword:00000000
-;任务栏："搜索框"变为"搜索图标"
-"SearchboxTaskbarMode"=dword:00000001
+;隐藏 "搜索框"
+"SearchboxTaskbarMode"=dword:00000000
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
 ;关闭应用商店中查找应用
