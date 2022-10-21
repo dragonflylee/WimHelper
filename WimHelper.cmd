@@ -73,8 +73,9 @@ rem call :IntRollupFix "%~1"
 rem call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs"
 call :AddAppx "%~1", "WindowsStore", "VCLibs UI.Xaml Runtime Framework"
 call :AddAppx "%~1", "DesktopAppInstaller"
-call :AddAppx "%~1", "WebExperience"
-call :AddAppx "%~1", "WindowsTerminal"
+if "%ImageVersion%" geq "10.0.22000" (
+   call :AddAppx "%~1", "WindowsTerminal"
+)
 call :ImportOptimize "%~1"
 call :ImportUnattend "%~1"
 call :ImageClean "%MNT%"
@@ -87,14 +88,15 @@ call :GetImageInfo "%~1", "%~2"
 title 正在处理 [%~2] 镜像 %ImageName% 版本 %ImageVersion% 语言 %ImageLanguage%
 %Dism% /Mount-Wim /WimFile:"%~1" /Index:%~2 /MountDir:"%MNT%"
 call :RemoveAppx "%MNT%"
-for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do call ::RemoveCapability "%MNT%", "%%f"
-for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%MNT%", "%%f"
-call :IntRollupFix "%MNT%"
+rem for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do call ::RemoveCapability "%MNT%", "%%f"
+rem for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%MNT%", "%%f"
 call :AddAppx "%MNT%", "WindowsStore", "VCLibs Runtime Framework UI.Xaml"
-call :AddAppx "%MNT%", "DesktopAppInstaller", ""
-call :AddAppx "%MNT%", "WacomTechnologyCorp", "UWPDesktop"
+call :AddAppx "%MNT%", "DesktopAppInstaller"
+if "%ImageVersion%" geq "10.0.22000" (
+   call :AddAppx "%~1", "WindowsTerminal"
+)
 call :ImportOptimize "%MNT%"
-call :ImportUnattend "%MNT%", "OEM"
+call :ImportUnattend "%MNT%"
 if exist "%~dp0Driver" %Dism% /Image:"%MNT%" /Add-Driver /Driver:"%~dp0Driver" /recurse /ForceUnsigned 
 call :ImageClean "%MNT%"
 %Dism% /Unmount-Wim /MountDir:"%MNT%" /Commit
@@ -228,9 +230,10 @@ if "%ImageShortVersion%" equ "10.0" (
     rem 右键菜单优化
     call :ImportRegistry "%~dp0Pack\Optimize\Context.reg"
     if "%ImageVersion%" lss "10.0.22000" (
-       call :ImportStartLayout "%~1", "LayoutModification.xml"
+        call :ImportStartLayout "%~1", "LayoutModification.xml"
     ) else (
-       call :ImportStartLayout "%~1", "LayoutModification.json"
+        call :ImportStartLayout "%~1", "LayoutModification.json"
+        call :ImportRegistry "%~dp0Pack\Optimize\11.0.reg"
     )
 )
 call :UnMountImageRegistry

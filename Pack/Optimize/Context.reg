@@ -42,3 +42,9 @@ Windows Registry Editor Version 5.00
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\AllFilesystemObjects\shell\LaunchWorkfoldersControl]
 ;ÓÒ¼ü "°üº¬µ½¿âÖÐ"
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Folder\shellex\ContextMenuHandlers\Library Location]
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\*\shell\runas]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\*\shell\notepad]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\*\shell\copypath]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\exefile\shell\runas2]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\shell\copypath]

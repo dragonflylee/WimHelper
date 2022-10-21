@@ -73,11 +73,10 @@ Win10 1709|10.0.16299|[32位](http://download.windowsupdate.com/d/msdownload/upd
 
 访问 https://store.rg-adguard.net/ 下载 appx 包
 
-比如应用商店的ID为 9WZDNCRFJBMP
-
-应用安装器的ID为 9NBLGGH4NNS1
-
-VP9 9N4D0MSMP0PT
+比如应用商店的ID为 9WZDNCRFJBMP  
+应用安装器的ID为 9NBLGGH4NNS1  
+VP9 9N4D0MSMP0PT  
+HEVC 9N4WGH0Z6VHQ  
 
 
 ## 使用说明
