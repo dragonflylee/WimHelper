@@ -75,6 +75,7 @@ call :AddAppx "%~1", "WindowsStore", "VCLibs UI.Xaml Runtime Framework"
 call :AddAppx "%~1", "DesktopAppInstaller"
 if "%ImageVersion%" geq "10.0.22000" (
    call :AddAppx "%~1", "WindowsTerminal"
+   call :AddAppx "%~1", "Client.WebExperience"
 )
 call :ImportOptimize "%~1"
 call :ImportUnattend "%~1"
@@ -94,6 +95,7 @@ call :AddAppx "%MNT%", "WindowsStore", "VCLibs Runtime Framework UI.Xaml"
 call :AddAppx "%MNT%", "DesktopAppInstaller"
 if "%ImageVersion%" geq "10.0.22000" (
    call :AddAppx "%~1", "WindowsTerminal"
+   call :AddAppx "%~1", "Client.WebExperience"
 )
 call :ImportOptimize "%MNT%"
 call :ImportUnattend "%MNT%"

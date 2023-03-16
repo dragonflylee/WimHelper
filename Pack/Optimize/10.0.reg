@@ -218,3 +218,7 @@ Windows Registry Editor Version 5.00
 ;禁用游戏栏
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR]
 "AppCaptureEnabled"=dword:00000000
+
+;禁用 Edge 发现按钮
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
+"HubsSidebarEnabled"=dword:00000000
