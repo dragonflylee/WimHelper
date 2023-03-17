@@ -4,8 +4,16 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32]
 @=""
 
-;任务栏居左
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+;任务栏居左
 "TaskbarAl"=dword:00000000
+;任务栏不显示小组件
+"TaskbarDa"=dword:00000000
+;开始菜单显示更多固定项
+"Start_Layout"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search]
+;任务栏搜索框
+"SearchboxTaskbarMode"=dword:00000003
 
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\Background\shell\OpenCMDHere]
