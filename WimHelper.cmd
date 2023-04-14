@@ -71,11 +71,13 @@ for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do
 for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%~1", "%%f"
 rem call :IntRollupFix "%~1"
 rem call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs"
-call :AddAppx "%~1", "WindowsStore", "VCLibs UI.Xaml Runtime Framework"
+call :AddAppx "%~1", "WindowsStore", "VCLibs UI.Xaml.2.7 Runtime Framework"
 call :AddAppx "%~1", "DesktopAppInstaller"
 if "%ImageVersion%" geq "10.0.22000" (
    call :AddAppx "%~1", "WindowsTerminal"
    call :AddAppx "%~1", "Client.WebExperience"
+   call :AddAppx "%~1", "WindowsNotepad", "UI.Xaml.2.8"
+   call :AddAppx "%~1", "ScreenSketch", "WindowsAppRuntime"
 )
 call :ImportOptimize "%~1"
 call :ImportUnattend "%~1"
@@ -313,6 +315,7 @@ set LicPath=/SkipLicense
 if "%ImageArch%" equ "x86" ( set "AppxArch=*x86*" ) else ( set "AppxArch=*" )
 for /f %%f in ('"dir /b %Apps%\*%~2*.xml" 2^>nul') do ( set LicPath=/LicensePath:"%Apps%\%%f" )
 for %%j in (%~3) do for /f %%i in ('"dir /b %Apps%\*%%j%AppxArch%.appx" 2^>nul') do ( set Dependency=!Dependency! /DependencyPackagePath:"%Apps%\%%i" )
+for %%j in (%~3) do for /f %%i in ('"dir /b %Apps%\*%%j%AppxArch%.msix" 2^>nul') do ( set Dependency=!Dependency! /DependencyPackagePath:"%Apps%\%%i" )
 for /f %%i in ('"dir /b %Apps%\*%~2*.*xbundle" 2^>nul') do (
     echo.集成应用 [%%~ni]
     %Dism% /Image:"%~1" /Add-ProvisionedAppxPackage /PackagePath:"%Apps%\%%i" %LicPath% %Dependency% /Quiet

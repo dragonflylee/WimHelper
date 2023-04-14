@@ -2,6 +2,7 @@ Pack/AAct*.exe
 Pack/Appx/*.AppxBundle
 Pack/Appx/*.MsixBundle
 Pack/Appx/*.Appx
+Pack/Appx/*.Msix
 *.wim
 *.esd
 *.iso
