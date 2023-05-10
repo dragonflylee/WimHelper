@@ -71,7 +71,7 @@ for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do
 for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%~1", "%%f"
 rem call :IntRollupFix "%~1"
 rem call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs"
-call :AddAppx "%~1", "WindowsStore", "VCLibs UI.Xaml.2.7 Runtime Framework"
+call :AddAppx "%~1", "WindowsStore", "VCLibs UI.Xaml.2.7 Native.Runtime Native.Framework"
 call :AddAppx "%~1", "DesktopAppInstaller"
 if "%ImageVersion%" geq "10.0.22000" (
    call :AddAppx "%~1", "WindowsTerminal"
@@ -93,7 +93,7 @@ title 正在处理 [%~2] 镜像 %ImageName% 版本 %ImageVersion% 语言 %ImageLanguage%
 call :RemoveAppx "%MNT%"
 rem for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do call ::RemoveCapability "%MNT%", "%%f"
 rem for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%MNT%", "%%f"
-call :AddAppx "%MNT%", "WindowsStore", "VCLibs Runtime Framework UI.Xaml"
+call :AddAppx "%MNT%", "WindowsStore", "VCLibs Native.Runtime Native.Framework UI.Xaml.2.7"
 call :AddAppx "%MNT%", "DesktopAppInstaller"
 if "%ImageVersion%" geq "10.0.22000" (
    call :AddAppx "%~1", "WindowsTerminal"
