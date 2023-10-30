@@ -8,7 +8,7 @@ mode con cols=120
 cls
 setlocal EnableDelayedExpansion
 set NSudo="%~dp0Bin\%PROCESSOR_ARCHITECTURE%\NSudo.exe"
-set "Dism=Dism.exe /NoRestart /LogLevel:1"
+set "Dism=Dism.exe /NoRestart /LogLevel:3 /LogPath:%~dp0Dism_%date:~0,4%%date:~5,2%%date:~8,2%.log"
 set "SRC=%SystemDrive%"
 set "MNT=%~dp0Mount"
 set "TMP=%~dp0Temp"
@@ -71,13 +71,12 @@ for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do
 for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%~1", "%%f"
 rem call :IntRollupFix "%~1"
 rem call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs"
-call :AddAppx "%~1", "WindowsStore", "VCLibs UI.Xaml.2.7 Native.Runtime Native.Framework"
-call :AddAppx "%~1", "DesktopAppInstaller"
+call :AddAppx "%~1", "WindowsStore", "VCLibs UI.Xaml.2.8 Native.Runtime Native.Framework"
+call :AddAppx "%~1", "DesktopAppInstaller", "UI.Xaml.2.7"
 if "%ImageVersion%" geq "10.0.22000" (
    call :AddAppx "%~1", "WindowsTerminal"
    call :AddAppx "%~1", "Client.WebExperience"
-   call :AddAppx "%~1", "WindowsNotepad", "UI.Xaml.2.8"
-   call :AddAppx "%~1", "ScreenSketch", "WindowsAppRuntime"
+   call :AddAppx "%~1", "WindowsNotepad"
 )
 call :ImportOptimize "%~1"
 call :ImportUnattend "%~1"
@@ -91,13 +90,12 @@ call :GetImageInfo "%~1", "%~2"
 title 正在处理 [%~2] 镜像 %ImageName% 版本 %ImageVersion% 语言 %ImageLanguage%
 %Dism% /Mount-Wim /WimFile:"%~1" /Index:%~2 /MountDir:"%MNT%"
 call :RemoveAppx "%MNT%"
-rem for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do call ::RemoveCapability "%MNT%", "%%f"
-rem for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%MNT%", "%%f"
-call :AddAppx "%MNT%", "WindowsStore", "VCLibs Native.Runtime Native.Framework UI.Xaml.2.7"
-call :AddAppx "%MNT%", "DesktopAppInstaller"
+rem for /d %%x in ("%MNT%\Program Files\WindowsApps\Microsoft.*") do call :RemoveFolder "%%x"
+call :AddAppx "%MNT%", "WindowsStore", "VCLibs UI.Xaml.2.8 Native.Runtime Native.Framework"
+call :AddAppx "%MNT%", "DesktopAppInstaller", "UI.Xaml.2.7"
 if "%ImageVersion%" geq "10.0.22000" (
-   call :AddAppx "%~1", "WindowsTerminal"
-   call :AddAppx "%~1", "Client.WebExperience"
+   call :AddAppx "%MNT%", "WindowsTerminal"
+   call :AddAppx "%MNT%", "WindowsNotepad"
 )
 call :ImportOptimize "%MNT%"
 call :ImportUnattend "%MNT%"
@@ -290,7 +288,7 @@ if "%ImageShortVersion%" leq "10.0" (
     set "UnattendFile=%~dp0Pack\Unattend.OEM.xml"
     copy "%~dp0Pack\oemlogo.bmp" "%~1\Windows\System32\oemlogo.bmp"
 ) else (
-    set "UnattendFile=%~dp0Pack\Unattend.%ImageShortVersion%.xml"
+    set "UnattendFile=%~dp0Pack\Unattend.%ImageShortVersion%.%ImageArch%.xml"
 )
 if exist "%UnattendFile%" (
     echo.导入应答 [%UnattendFile%]
@@ -333,7 +331,7 @@ goto :eof
 
 rem 移除自带应用 [ %~1 : 镜像挂载路径 ]
 :RemoveAppx
-for /f "tokens=3" %%f in ('%Dism% /English /Image:"%~1" /Get-ProvisionedAppxPackages ^| findstr PackageName ^| findstr /V SecHealthUI') do (
+for /f "tokens=3" %%f in ('%Dism% /English /Image:"%~1" /Get-ProvisionedAppxPackages ^| findstr PackageName ^| findstr /V DesktopAppInstaller') do (
     echo.移除应用 [%%f]
     %Dism% /Image:"%~1" /Remove-ProvisionedAppxPackage /PackageName:"%%f" /Quiet
 )

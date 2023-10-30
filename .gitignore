@@ -6,6 +6,7 @@ Pack/Appx/*.Msix
 *.wim
 *.esd
 *.iso
+*.log
 
 /Mount
 /Temp
