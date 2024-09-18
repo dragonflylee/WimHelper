@@ -75,7 +75,7 @@ call :AddAppx "%~1", "WindowsStore", "VCLibs UI.Xaml.2.8 Native.Runtime Native.F
 call :AddAppx "%~1", "DesktopAppInstaller", "UI.Xaml.2.7"
 if "%ImageVersion%" geq "10.0.22000" (
    call :AddAppx "%~1", "WindowsTerminal"
-   call :AddAppx "%~1", "Client.WebExperience"
+   call :AddAppx "%~1", "Client.WebExperience", "AppRuntime"
    call :AddAppx "%~1", "WindowsNotepad"
 )
 call :ImportOptimize "%~1"

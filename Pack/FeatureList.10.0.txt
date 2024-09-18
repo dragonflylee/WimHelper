@@ -5,9 +5,9 @@ QuickAssist
 ;Windows Media Player ²¥·ÅÆ÷
 WindowsMediaPlayer
 ;SSH¿Í»§¶Ë
-OpenSSH.Client
+;OpenSSH.Client
 
-PowerShell.ISE
+;PowerShell.ISE
 
 MSPaint
 Notepad
