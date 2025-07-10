@@ -70,12 +70,9 @@ call :RemoveAppx "%~1"
 for /f %%f in ('type "%~dp0Pack\FeatureList.%ImageShortVersion%.txt" 2^>nul') do call :RemoveCapability "%~1", "%%f"
 for /f %%f in ('type "%~dp0Pack\RemoveList.%ImageVersion%.txt" 2^>nul') do call :RemoveComponent "%~1", "%%f"
 rem call :IntRollupFix "%~1"
-rem call :AddAppx "%~1", "DesktopAppInstaller", "VCLibs"
 call :AddAppx "%~1", "WindowsStore", "VCLibs UI.Xaml.2.8 Native.Runtime Native.Framework"
-call :AddAppx "%~1", "DesktopAppInstaller", "UI.Xaml.2.7"
 if "%ImageVersion%" geq "10.0.22000" (
    call :AddAppx "%~1", "WindowsTerminal"
-   call :AddAppx "%~1", "Client.WebExperience", "AppRuntime"
    call :AddAppx "%~1", "WindowsNotepad"
 )
 call :ImportOptimize "%~1"
@@ -316,7 +313,7 @@ for %%j in (%~3) do for /f %%i in ('"dir /b %Apps%\*%%j%AppxArch%.appx" 2^>nul')
 for %%j in (%~3) do for /f %%i in ('"dir /b %Apps%\*%%j%AppxArch%.msix" 2^>nul') do ( set Dependency=!Dependency! /DependencyPackagePath:"%Apps%\%%i" )
 for /f %%i in ('"dir /b %Apps%\*%~2*.*xbundle" 2^>nul') do (
     echo.集成应用 [%%~ni]
-    %Dism% /Image:"%~1" /Add-ProvisionedAppxPackage /PackagePath:"%Apps%\%%i" %LicPath% %Dependency% /Quiet
+    %Dism% /Image:"%~1" /Add-ProvisionedAppxPackage /PackagePath:"%Apps%\%%i" %LicPath% %Dependency% /Quiet /Region:all
 )
 endlocal
 goto :eof
@@ -331,7 +328,7 @@ goto :eof
 
 rem 移除自带应用 [ %~1 : 镜像挂载路径 ]
 :RemoveAppx
-for /f "tokens=3" %%f in ('%Dism% /English /Image:"%~1" /Get-ProvisionedAppxPackages ^| findstr PackageName ^| findstr /V DesktopAppInstaller') do (
+for /f "tokens=3" %%f in ('%Dism% /English /Image:"%~1" /Get-ProvisionedAppxPackages ^| findstr PackageName ^| findstr /V SecHealthUI') do (
     echo.移除应用 [%%f]
     %Dism% /Image:"%~1" /Remove-ProvisionedAppxPackage /PackageName:"%%f" /Quiet
 )
